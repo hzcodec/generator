@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
 
 	struct Generator counter = {COUNTER, 
 	                            0,              // amplitude, 
-				    256,            // number of samples 
+				    64,            // number of samples 
 				    NOISE_ON,       // enable noise
 				    0.1,            // min noise level
 				    0.3,            // max noise level

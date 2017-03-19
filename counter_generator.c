@@ -13,9 +13,9 @@ float* Counter_generator__generate_counter(struct Generator* self)
 
         fp = fopen("counter_samples.txt", "w");
         
-        float *ar = (float *)malloc(sizeof(float) * 256);    
+        float *ar = (float *)malloc(sizeof(float) * self->numberOfSamples);    
 
-        for (int i=0; i<256; i++)
+        for (int i=0; i<self->numberOfSamples; i++)
         {
 	        if (self->enableNoise == NOISE_ON)
 	        {
