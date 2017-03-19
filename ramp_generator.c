@@ -12,8 +12,9 @@
 #include "frame1.h"
 #include "common.h"
  
-float* Ramp_generator__ramp_array(struct Generator* self)
+float* Ramp_generator__generate_ramp(struct Generator* self)
 {
+	printf("%s() - \n", __func__);
         FILE *fp;
 	float yVal;
 	float noise = 0.0;
@@ -23,7 +24,7 @@ float* Ramp_generator__ramp_array(struct Generator* self)
 	int   idx1;
 
         float *ar = (float *)malloc(sizeof(float) * self->numberOfSamples);    
-        fp = fopen("logfiles/ramp_samples.txt", "w");
+        fp = fopen("ramp_samples.txt", "w");
 
 	char *str = "Ramp ";
 	char c = self->rampSlopeType + '0';
@@ -85,6 +86,8 @@ float* Ramp_generator__ramp_array(struct Generator* self)
 	}
 
 	fclose(fp);
+
+	printf("'ramp_samples.txt' created\n");
 
 	return ar;
 }

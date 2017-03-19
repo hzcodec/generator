@@ -14,6 +14,7 @@
 #include "frame1.h"
 #include "sinus_generator.h"
 #include "counter_generator.h"
+#include "ramp_generator.h"
 
 void Generator__printProperties(struct Generator* self)
 {
@@ -51,12 +52,15 @@ void Generator__printProperties(struct Generator* self)
 struct Generator* Generator__create(struct Generator* gen)
 {
 	struct Generator* result = malloc((sizeof(struct Generator)));
-	//printf("%s() - result:%p, type:%d, amplitude:%.2f\n", __func__, result, gen->type, gen->amplitude);
+	printf("%s() - result:%p, type:%s, amplitude:%.2f\n", __func__, result, ENUM2STRING(gen->type), gen->amplitude);
 
 	switch (gen->type)
 	{
 	        case SINUS:
 	             result->gen = Sinus_generator__generate_sinus;
+	             break;
+	        case RAMP:
+	             result->gen = Ramp_generator__generate_ramp;
 	             break;
 	        case COUNTER:
 	             result->gen = Counter_generator__generate_counter;
@@ -114,7 +118,16 @@ int main(int argc, char *argv[])
 				    0.1,            // min noise level
 				    0.3,            // max noise level
 				    NOT_APPLICABLE
-				    };
+				   };
+
+	struct Generator ramp = {RAMP, 
+	                         0,              // amplitude, 
+				 128,            // number of samples 
+				 NOISE_OFF,      // enable noise
+				 0.1,            // min noise level
+				 0.3,            // max noise level
+				 1               // ramp type
+				};
 
         struct Generator *pSinusGenerator = Generator__create(&sinGenerator);
         Generator__run(pSinusGenerator);
@@ -122,8 +135,12 @@ int main(int argc, char *argv[])
         struct Generator *pCounterGenerator = Generator__create(&counter);
         Generator__run(pCounterGenerator);
 
+        struct Generator *pRampGenerator = Generator__create(&ramp);
+        Generator__run(pRampGenerator);
+
         Generator__destroy(pSinusGenerator); 
         Generator__destroy(pCounterGenerator); 
+        Generator__destroy(pRampGenerator); 
 
 	return 0;
 }
