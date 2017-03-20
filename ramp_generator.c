@@ -38,14 +38,14 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
 
 	switch(self->rampSlopeType)
 	{
-	    case 0: idx = (int)(0.75*(float)self->numberOfSamples);
-		    break;
-	    case 1: idx = (int)(0.25*(float)self->numberOfSamples);
-		    break;
-	    case 2: idx = (int)(0.50*(float)self->numberOfSamples);
-		    break;
-	    case 3: idx = (int)(0.75*(float)self->numberOfSamples);
-		    break;
+	    case RAMP1: idx = (int)(0.75*(float)self->numberOfSamples);
+		        break;
+	    case RAMP2: idx = (int)(0.25*(float)self->numberOfSamples);
+		        break;
+	    case RAMP3: idx = (int)(0.50*(float)self->numberOfSamples);
+		        break;
+	    case RAMP4: idx = (int)(0.75*(float)self->numberOfSamples);
+		        break;
             default: idx = 200;
 		     break;
 	}
@@ -82,7 +82,7 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
 
 	fclose(fp);
 
-	printf("'ramp_samples.txt' created\n");
+	printf("'ramp_samples.txt' created with slope type: %s\n", ENUM2STRING(self->rampSlopeType));
 
 	return ar;
 }

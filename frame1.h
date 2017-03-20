@@ -10,6 +10,10 @@
                           _str == POWER2 ? "Power2" : \
                           _str == NOISE_ON ? "NOISE_ON" : \
                           _str == NOISE_OFF ? "NOISE_OFF" : \
+                          _str == RAMP1 ? "RAMP1" : \
+                          _str == RAMP2 ? "RAMP2" : \
+                          _str == RAMP3 ? "RAMP3" : \
+                          _str == RAMP4 ? "RAMP4" : \
                           _str == NOT_APPLICABLE ? "NOT_APPLICABLE" : "UNKNOWN"
 
 enum generator_properties {
@@ -20,15 +24,19 @@ enum generator_properties {
 	POWER2,
         NOISE_ON,
 	NOISE_OFF,
-	NOT_APPLICABLE,
-};
-
-enum generator_ramp_slope {
-	RAMP1 = 0,
+	RAMP1,
 	RAMP2,
 	RAMP3,
 	RAMP4,
+	NOT_APPLICABLE,
 };
+
+//enum generator_ramp_slope {
+//	RAMP1 = 0,
+//	RAMP2,
+//	RAMP3,
+//	RAMP4,
+//};
 
 
 
