@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
 				 NOISE_OFF,      // enable noise
 				 0.1,            // min noise level
 				 0.3,            // max noise level
-				 1               // ramp type
+				 RAMP1           // ramp type
 				};
 
         struct Generator *pSinusGenerator = Generator__create(&sinGenerator);

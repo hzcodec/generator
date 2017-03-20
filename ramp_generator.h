@@ -1,5 +1,5 @@
-#ifndef _FRAME_H_
-#define _FRAME_H_
+#ifndef _RAMP_H_
+#define _RAMP_H_
 
 float* Ramp_generator__generate_ramp(struct Generator* self);
 
