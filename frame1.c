@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
 				   };
 
 	struct Generator ramp = {RAMP, 
-	                         0,              // amplitude, 
+	                         2.0,            // amplitude, 
 				 128,            // number of samples 
 				 NOISE_OFF,      // enable noise
 				 0.1,            // min noise level

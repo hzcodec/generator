@@ -21,7 +21,7 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
 	float part;
 	float minValue = 1;
 	int   rampStartValue = 0.1 * self->numberOfSamples; // start condition 10% of max samples
-	int   idx1;
+	int   idx;
 
         float *ar = (float *)malloc(sizeof(float) * self->numberOfSamples);    
         fp = fopen("ramp_samples.txt", "w");
@@ -38,28 +38,31 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
 
 	switch(self->rampSlopeType)
 	{
-	    case 0: idx1 = (int)(0.05*(float)self->numberOfSamples);
-	            printf("%s() - Ramp type:%d, idx1:%d\n", __func__, self->rampSlopeType, idx1);
-	            part = 0.05; // 5%
+	    case 0: idx = (int)(0.25*(float)self->numberOfSamples);
+	            printf("%s() - Ramp type:%d, idx:%d\n", __func__, self->rampSlopeType, idx);
 		    break;
-	    case 1: idx1 = (int)(0.25*(float)self->numberOfSamples);
-	            part = 0.25; // 25%
+	    case 1: idx = (int)(0.25*(float)self->numberOfSamples);
 		    break;
-	    case 2: idx1 = (int)(0.50*(float)self->numberOfSamples);
-	            part = 0.50; // 50%
+	    case 2: idx = (int)(0.50*(float)self->numberOfSamples);
 		    break;
-	    case 3: idx1 = (int)(0.75*(float)self->numberOfSamples);
-	            part = 0.75; // 75%
+	    case 3: idx = (int)(0.75*(float)self->numberOfSamples);
 		    break;
-            default: idx1 = 200;
-	             part = 0.05;
+            default: idx = 200;
 		     break;
 	}
 
-        for (int i=minValue; i<rampStartValue+idx1; i++)
+        for (int i=rampStartValue; i<rampStartValue+idx; i++)
 	{
-            float k = (self->amplitude-minValue)/(float)((rampStartValue+idx1) - rampStartValue);
-	    yVal = k*(i-rampStartValue) + minValue;
+	    float x1 = rampStartValue;
+	    float y1 = 0;
+
+	    float x2 = rampStartValue + (float)idx;
+	    float y2 = self->amplitude;
+
+            float k = (y2-y1) / (x2-x1);
+	    yVal = k*(rampStartValue+i) + minValue;
+	    printf("x1:%.4f, y1:%.4f, x2:%.4f, y2:%.4f, rampStartValue:%d, minValue:%.4f, k:%.4f, yVal:%.4f\n", x1, y1, x2, y2, rampStartValue, minValue, k, yVal);
+
 	    if (self->enableNoise == NOISE_ON)
 	    {
                 //noise = rand_interval(self->minNoiseValue, self->maxNoiseValue);
@@ -68,13 +71,13 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
 	    ar[i] = yVal + noise;
 	}
 
-        for (int i=rampStartValue+idx1; i<self->numberOfSamples; i++)
+        for (int i=rampStartValue+idx; i<self->numberOfSamples; i++)
 	{
 	    if (self->enableNoise == NOISE_ON)
 	    {
                 //noise = rand_interval(self->minNoiseValue, self->maxNoiseValue);
 	    }
-	    fprintf(fp, "%.4f\n", self->amplitude + noise);
+	    fprintf(fp, "%.4f\n", (yVal + minValue));
 	    ar[i] = self->amplitude + noise;
 	}
 
