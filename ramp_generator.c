@@ -18,7 +18,6 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
         FILE *fp;
 	float yVal;
 	float noise = 0.0;
-	float part;
 	float minValue = 1;
 	int   rampStartValue = 0.1 * self->numberOfSamples; // start condition 10% of max samples
 	int   idx;

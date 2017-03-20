@@ -1,7 +1,7 @@
 #ifndef _FRAME_H_
 #define _FRAME_H_
 
-#define DELIMITER "---------------------------\n"
+#define DELIMITER "---------------------------------------------------\n"
 
 #define ENUM2STRING(_str) _str == SINUS ? "Sinus" : \
                           _str == RAMP ? "Ramp" : \
@@ -30,14 +30,6 @@ enum generator_properties {
 	RAMP4,
 	NOT_APPLICABLE,
 };
-
-//enum generator_ramp_slope {
-//	RAMP1 = 0,
-//	RAMP2,
-//	RAMP3,
-//	RAMP4,
-//};
-
 
 
 struct Generator{

@@ -52,7 +52,7 @@ void Generator__printProperties(struct Generator* self)
 struct Generator* Generator__create(struct Generator* gen)
 {
 	struct Generator* result = malloc((sizeof(struct Generator)));
-	printf("%s() - result:%p, type:%s, amplitude:%.2f\n", __func__, result, ENUM2STRING(gen->type), gen->amplitude);
+	//printf("%s() - result:%p, type:%s, amplitude:%.2f\n", __func__, result, ENUM2STRING(gen->type), gen->amplitude);
 
 	switch (gen->type)
 	{
