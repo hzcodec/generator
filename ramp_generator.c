@@ -38,7 +38,7 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
 
 	switch(self->rampSlopeType)
 	{
-	    case RAMP1: idx = (int)(0.75*(float)self->numberOfSamples);
+	    case RAMP1: idx = (int)(0.05*(float)self->numberOfSamples);
 		        break;
 	    case RAMP2: idx = (int)(0.25*(float)self->numberOfSamples);
 		        break;
