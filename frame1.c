@@ -22,6 +22,7 @@ struct Gen_properties {
         float amplitude;
 	int   numberOfSamples;
 	int   enableNoise;
+	int   rampSlopeType;
 };
 
 
@@ -30,6 +31,7 @@ void print_usage()
     printf("Usage: -a [0.0 - user def] -s [64 - 12288] -n [0 | 1]\n");
     printf("       -a : amplitude\n");
     printf("       -s : number of samples\n");
+    printf("       -r : ramp type [1 -4]\n");
     printf("       -n : enable noise\n");
 }
 
@@ -61,7 +63,14 @@ void Generator__printProperties(struct Generator* self)
                 printf("Max Noise level: NOT_APPLICABLE\n");
 	}
 
-        printf("Ramp type: %s\n", ENUM2STRING(self->rampSlopeType));
+	if (self->type == RAMP)
+	{
+                printf("Ramp type: %s\n", ENUM2STRING(self->rampSlopeType));
+	}
+	else
+	{
+                printf("Ramp type: NOT APPLICABLE\n");
+	}
         printf(DELIMITER);
 }
 
@@ -121,14 +130,9 @@ void Generator__destroy(struct Generator* gen)
 void Generator__populate_object(struct Generator *self, struct Gen_properties *gp)
 {
 	self->amplitude = gp->amplitude;
-
 	self->numberOfSamples = gp->numberOfSamples;
-
-	printf("noise:%d\n", gp->enableNoise);
-	self->enableNoise = gp->enableNoise; // + NOISE_OFF_POS;
-	self->enableNoise = gp->enableNoise; // + NOISE_OFF_POS;
-	self->enableNoise = gp->enableNoise; // + NOISE_OFF_POS;
-	self->enableNoise = gp->enableNoise; // + NOISE_OFF_POS;
+	self->enableNoise = gp->enableNoise;
+	self->rampSlopeType = gp->rampSlopeType;
 }
 
 
@@ -136,14 +140,17 @@ int main(int argc, char *argv[])
 {
         int option = 0;
         int select = 1;
-	int noise  = 0;
+	int noise  = NOISE_OFF;   // noise off
+	int rt     = RAMP1;   // ramp type 1
+
 	struct Gen_properties gp;
 
 	gp.amplitude = 1.0; 
 	gp.numberOfSamples = 64; 
 	gp.enableNoise = NOISE_OFF;
+	gp.rampSlopeType = RAMP1;
 
-        while ((option = getopt(argc, argv,"a:s:n:h")) != -1)
+        while ((option = getopt(argc, argv,"a:s:n:r:h")) != -1)
 	{
             switch (option) {
                               case 'a' : gp.amplitude = atof(optarg);
@@ -152,6 +159,21 @@ int main(int argc, char *argv[])
                                          break;
                               case 'n' : noise = atoi(optarg);
 			                 gp.enableNoise = noise ? NOISE_ON : NOISE_OFF; 
+                                         break;
+                              case 'r' : rt = atoi(optarg);
+					 switch (rt)
+					 {
+					     case 1: gp.rampSlopeType = RAMP1; 
+					             break;
+					     case 2: gp.rampSlopeType = RAMP2; 
+					             break;
+					     case 3: gp.rampSlopeType = RAMP3; 
+					             break;
+					     case 4: gp.rampSlopeType = RAMP4; 
+					             break;
+					     default: gp.rampSlopeType = RAMP1; 
+					              break;
+					 }
                                          break;
                               case 'h' : print_usage();
                                          exit(EXIT_FAILURE);
