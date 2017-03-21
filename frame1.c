@@ -52,36 +52,36 @@ void Generator__printProperties(struct Generator* self)
 // Allocation + initialization
 struct Generator* Generator__create(struct Generator* gen)
 {
-	struct Generator* result = malloc((sizeof(struct Generator)));
-	//printf("%s() - result:%p, type:%s, amplitude:%.2f\n", __func__, result, ENUM2STRING(gen->type), gen->amplitude);
+	struct Generator* generatorObject = malloc((sizeof(struct Generator)));
+	//printf("%s() - generatorObject:%p, type:%s, amplitude:%.2f\n", __func__, generatorObject, ENUM2STRING(gen->type), gen->amplitude);
 
 	switch (gen->type)
 	{
 	        case SINUS:
-	             result->gen = Sinus_generator__generate_sinus;
+	             generatorObject->gen = Sinus_generator__generate_sinus;
 	             break;
 	        case RAMP:
-	             result->gen = Ramp_generator__generate_ramp;
+	             generatorObject->gen = Ramp_generator__generate_ramp;
 	             break;
 	        case COUNTER:
-	             result->gen = Counter_generator__generate_counter;
+	             generatorObject->gen = Counter_generator__generate_counter;
 	             break;
 	        case SQUARE:
-	             result->gen = Square_generator__generate_square;
+	             generatorObject->gen = Square_generator__generate_square;
 	             break;
 	        default:
-	             result->gen = Sinus_generator__generate_sinus;
+	             generatorObject->gen = Sinus_generator__generate_sinus;
 	             break;
 	}
-        result->type = gen->type;
-        result->amplitude = gen->amplitude;
-        result->numberOfSamples = gen->numberOfSamples;
-        result->enableNoise = gen->enableNoise;
-        result->minNoiseValue = gen->minNoiseValue;
-        result->maxNoiseValue = gen->maxNoiseValue;
-        result->rampSlopeType = gen->rampSlopeType;
+        generatorObject->type = gen->type;
+        generatorObject->amplitude = gen->amplitude;
+        generatorObject->numberOfSamples = gen->numberOfSamples;
+        generatorObject->enableNoise = gen->enableNoise;
+        generatorObject->minNoiseValue = gen->minNoiseValue;
+        generatorObject->maxNoiseValue = gen->maxNoiseValue;
+        generatorObject->rampSlopeType = gen->rampSlopeType;
 
-	return result;
+	return generatorObject;
 }
 
 void Generator__run(struct Generator* self)
