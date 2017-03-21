@@ -157,6 +157,7 @@ int main(int argc, char *argv[])
         Generator__destroy(pSinusGenerator); 
         Generator__destroy(pCounterGenerator); 
         Generator__destroy(pRampGenerator); 
+        Generator__destroy(pSquareGenerator); 
 
 	return 0;
 }
