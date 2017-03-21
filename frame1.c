@@ -18,10 +18,19 @@
 #include "ramp_generator.h"
 #include "square_generator.h"
 
+struct Gen_properties {
+        float amplitude;
+	int   numberOfSamples;
+	int   enableNoise;
+};
+
 
 void print_usage()
 {
     printf("Usage: -a [0.0 - user def] -s [64 - 12288] -n [0 | 1]\n");
+    printf("       -a : amplitude\n");
+    printf("       -s : number of samples\n");
+    printf("       -n : enable noise\n");
 }
 
 void Generator__printProperties(struct Generator* self)
@@ -109,6 +118,18 @@ void Generator__destroy(struct Generator* gen)
         }
 }
 
+void Generator__populate_object(struct Generator *self, struct Gen_properties *gp)
+{
+	self->amplitude = gp->amplitude;
+
+	self->numberOfSamples = gp->numberOfSamples;
+
+	self->enableNoise = gp->enableNoise + NOISE_OFF_POS;
+	self->enableNoise = gp->enableNoise + NOISE_OFF_POS;
+	self->enableNoise = gp->enableNoise + NOISE_OFF_POS;
+	self->enableNoise = gp->enableNoise + NOISE_OFF_POS;
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -117,15 +138,16 @@ int main(int argc, char *argv[])
 	float amplitude = 1.0; 
 	int numberOfSamples = 64; 
 	int enableNoise = NOISE_OFF;
+	struct Gen_properties gp;
 
-        while ((option = getopt(argc, argv,"a:n:h")) != -1)
+        while ((option = getopt(argc, argv,"a:s:n:h")) != -1)
 	{
             switch (option) {
-                              case 'a' : amplitude = atof(optarg);
+                              case 'a' : gp.amplitude = atof(optarg);
                                          break;
-                              case 's' : numberOfSamples = atoi(optarg);
+                              case 's' : gp.numberOfSamples = atoi(optarg);
                                          break;
-                              case 'n' : enableNoise = atoi(optarg);
+                              case 'n' : gp.enableNoise = atoi(optarg);
                                          break;
                               case 'h' : print_usage();
                                          exit(EXIT_FAILURE);
@@ -172,19 +194,10 @@ int main(int argc, char *argv[])
 				 RAMP1           // ramp type
 				};
 
-	sin.amplitude    = amplitude;
-	ramp.amplitude   = amplitude;
-	square.amplitude = amplitude;
-
-	sin.numberOfSamples     = numberOfSamples;
-	counter.numberOfSamples = numberOfSamples;
-	ramp.numberOfSamples    = numberOfSamples;
-	square.numberOfSamples  = numberOfSamples;
-
-	sin.enableNoise     = enableNoise + NOISE_OFF_POS;
-	counter.enableNoise = enableNoise + NOISE_OFF_POS;
-	ramp.enableNoise    = enableNoise + NOISE_OFF_POS;
-	square.enableNoise  = enableNoise + NOISE_OFF_POS;
+        Generator__populate_object(&sin, &gp);
+        Generator__populate_object(&counter, &gp);
+        Generator__populate_object(&ramp, &gp);
+        Generator__populate_object(&square, &gp);
 
         struct Generator *pSinusGenerator = Generator__create(&sin);
         Generator__run(pSinusGenerator);
