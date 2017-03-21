@@ -102,7 +102,7 @@ void Generator__destroy(struct Generator* gen)
 int main(int argc, char *argv[])
 {
 	// setup default parameters for sinus generator
-	struct Generator sinGenerator = {SINUS, 
+	struct Generator sinGenerator = {SINUS,         // signal type
 	                                 8.0,           // amplitude, 
 				         256,           // number of samples 
 				         NOISE_OFF,     // disable noise
@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
 					 NOT_APPLICABLE
 				        };
 
-	struct Generator counter = {COUNTER, 
+	struct Generator counter = {COUNTER,        // signal type
 	                            0,              // amplitude, 
 				    64,             // number of samples 
 				    NOISE_ON,       // enable noise
@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
 				    NOT_APPLICABLE
 				   };
 
-	struct Generator ramp = {RAMP, 
+	struct Generator ramp = {RAMP,           // signal type
 	                         2.0,            // amplitude, 
 				 128,            // number of samples 
 				 NOISE_OFF,      // enable noise
