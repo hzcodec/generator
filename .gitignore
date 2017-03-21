@@ -1,1 +1,4 @@
 tags
+frame
+*.o
+*.txt

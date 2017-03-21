@@ -124,10 +124,11 @@ void Generator__populate_object(struct Generator *self, struct Gen_properties *g
 
 	self->numberOfSamples = gp->numberOfSamples;
 
-	self->enableNoise = gp->enableNoise + NOISE_OFF_POS;
-	self->enableNoise = gp->enableNoise + NOISE_OFF_POS;
-	self->enableNoise = gp->enableNoise + NOISE_OFF_POS;
-	self->enableNoise = gp->enableNoise + NOISE_OFF_POS;
+	printf("noise:%d\n", gp->enableNoise);
+	self->enableNoise = gp->enableNoise; // + NOISE_OFF_POS;
+	self->enableNoise = gp->enableNoise; // + NOISE_OFF_POS;
+	self->enableNoise = gp->enableNoise; // + NOISE_OFF_POS;
+	self->enableNoise = gp->enableNoise; // + NOISE_OFF_POS;
 }
 
 
@@ -135,10 +136,12 @@ int main(int argc, char *argv[])
 {
         int option = 0;
         int select = 1;
-	float amplitude = 1.0; 
-	int numberOfSamples = 64; 
-	int enableNoise = NOISE_OFF;
+	int noise  = 0;
 	struct Gen_properties gp;
+
+	gp.amplitude = 1.0; 
+	gp.numberOfSamples = 64; 
+	gp.enableNoise = NOISE_OFF;
 
         while ((option = getopt(argc, argv,"a:s:n:h")) != -1)
 	{
@@ -147,7 +150,8 @@ int main(int argc, char *argv[])
                                          break;
                               case 's' : gp.numberOfSamples = atoi(optarg);
                                          break;
-                              case 'n' : gp.enableNoise = atoi(optarg);
+                              case 'n' : noise = atoi(optarg);
+			                 gp.enableNoise = noise ? NOISE_ON : NOISE_OFF; 
                                          break;
                               case 'h' : print_usage();
                                          exit(EXIT_FAILURE);
@@ -186,13 +190,13 @@ int main(int argc, char *argv[])
 				};
 
 	struct Generator square = {SQUARE,       // signal type
-	                         2.0,            // amplitude, 
-				 1024,           // number of samples 
-				 NOISE_ON,       // enable noise
-				 0.1,            // min noise level
-				 0.3,            // max noise level
-				 RAMP1           // ramp type
-				};
+	                           2.0,            // amplitude, 
+				   1024,           // number of samples 
+				   NOISE_ON,       // enable noise
+				   0.1,            // min noise level
+				   0.3,            // max noise level
+				   RAMP1           // ramp type
+				  };
 
         Generator__populate_object(&sin, &gp);
         Generator__populate_object(&counter, &gp);
