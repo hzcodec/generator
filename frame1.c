@@ -15,6 +15,7 @@
 #include "sinus_generator.h"
 #include "counter_generator.h"
 #include "ramp_generator.h"
+#include "square_generator.h"
 
 void Generator__printProperties(struct Generator* self)
 {
@@ -64,6 +65,9 @@ struct Generator* Generator__create(struct Generator* gen)
 	             break;
 	        case COUNTER:
 	             result->gen = Counter_generator__generate_counter;
+	             break;
+	        case SQUARE:
+	             result->gen = Square_generator__generate_square;
 	             break;
 	        default:
 	             result->gen = Sinus_generator__generate_sinus;
@@ -129,6 +133,15 @@ int main(int argc, char *argv[])
 				 RAMP1           // ramp type
 				};
 
+	struct Generator square = {SQUARE,       // signal type
+	                         2.0,            // amplitude, 
+				 128,            // number of samples 
+				 NOISE_OFF,      // enable noise
+				 0.1,            // min noise level
+				 0.3,            // max noise level
+				 RAMP1           // ramp type
+				};
+
         struct Generator *pSinusGenerator = Generator__create(&sinGenerator);
         Generator__run(pSinusGenerator);
 
@@ -137,6 +150,9 @@ int main(int argc, char *argv[])
 
         struct Generator *pRampGenerator = Generator__create(&ramp);
         Generator__run(pRampGenerator);
+
+        struct Generator *pSquareGenerator = Generator__create(&square);
+        Generator__run(pSquareGenerator);
 
         Generator__destroy(pSinusGenerator); 
         Generator__destroy(pCounterGenerator); 

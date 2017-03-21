@@ -6,8 +6,9 @@ m1: frame1.c
 	$(CC) ramp_generator.c -c
 	$(CC) sinus_generator.c -c
 	$(CC) counter_generator.c -c
+	$(CC) square_generator.c -c
 	$(CC) common.c -c
-	gcc  sinus_generator.o counter_generator.o ramp_generator.o common.o frame1.o -lm -o frame
+	gcc  sinus_generator.o counter_generator.o ramp_generator.o square_generator.o common.o frame1.o -lm -o frame
 
 
 clean:
