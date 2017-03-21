@@ -29,9 +29,9 @@ float* Square_generator__generate_square(struct Generator *self)
 
 	for (int i=0; i<((int)start); i++)
 	{
-	    if (self->enableNoise == true)
+	    if (self->enableNoise == NOISE_ON)
 	    {
-                noise = Common__gen_noise(self);
+                noise = Common__gen_noise(self) / 4;
 	    }
             ar[i] = (out + noise) * self->amplitude;
             fprintf(fp, "%.4f\n", (out + noise) * self->amplitude);
@@ -41,9 +41,9 @@ float* Square_generator__generate_square(struct Generator *self)
 	out = 1.0;
 	for (int i=start+1; i<((int)stop); i++)
 	{
-	    if (self->enableNoise == true)
+	    if (self->enableNoise == NOISE_ON)
 	    {
-                noise = Common__gen_noise(self);
+                noise = Common__gen_noise(self) / 4;
 	    }
             ar[i] = (out + noise) * self->amplitude;
             fprintf(fp, "%.4f\n", (out + noise) * self->amplitude);
@@ -52,9 +52,9 @@ float* Square_generator__generate_square(struct Generator *self)
 	out = 0.0;
 	for (int i=stop+1; i<((int)self->numberOfSamples+2); i++)
 	{
-	    if (self->enableNoise == true)
+	    if (self->enableNoise == NOISE_ON)
 	    {
-                noise = Common__gen_noise(self);
+                noise = Common__gen_noise(self) / 4;
 	    }
             ar[i] = (out + noise) * self->amplitude;
             fprintf(fp, "%.4f\n", (out + noise) * self->amplitude);

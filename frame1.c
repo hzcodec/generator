@@ -135,8 +135,8 @@ int main(int argc, char *argv[])
 
 	struct Generator square = {SQUARE,       // signal type
 	                         2.0,            // amplitude, 
-				 128,            // number of samples 
-				 NOISE_OFF,      // enable noise
+				 1024,           // number of samples 
+				 NOISE_ON,       // enable noise
 				 0.1,            // min noise level
 				 0.3,            // max noise level
 				 RAMP1           // ramp type
