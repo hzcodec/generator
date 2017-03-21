@@ -16,14 +16,16 @@
                           _str == RAMP4 ? "RAMP4" : \
                           _str == NOT_APPLICABLE ? "NOT_APPLICABLE" : "UNKNOWN"
 
+#define NOISE_OFF_POS 5
+
 enum generator_properties {
 	SINUS = 0,
 	RAMP,
         SQUARE,
 	COUNTER,
 	POWER2,
-        NOISE_ON,
 	NOISE_OFF,
+        NOISE_ON,
 	RAMP1,
 	RAMP2,
 	RAMP3,

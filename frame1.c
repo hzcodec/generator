@@ -11,11 +11,18 @@
 #include <stdlib.h>
 #include <inttypes.h>
 #include <stdbool.h>
+#include <getopt.h>
 #include "frame1.h"
 #include "sinus_generator.h"
 #include "counter_generator.h"
 #include "ramp_generator.h"
 #include "square_generator.h"
+
+
+void print_usage()
+{
+    printf("Usage: -a [0.0 - user def] -s [64 - 12288] -n [0 | 1]\n");
+}
 
 void Generator__printProperties(struct Generator* self)
 {
@@ -105,15 +112,38 @@ void Generator__destroy(struct Generator* gen)
 
 int main(int argc, char *argv[])
 {
+        int option = 0;
+        int select = 1;
+	float amplitude = 1.0; 
+	int numberOfSamples = 64; 
+	int enableNoise = NOISE_OFF;
+
+        while ((option = getopt(argc, argv,"a:n:h")) != -1)
+	{
+            switch (option) {
+                              case 'a' : amplitude = atof(optarg);
+                                         break;
+                              case 's' : numberOfSamples = atoi(optarg);
+                                         break;
+                              case 'n' : enableNoise = atoi(optarg);
+                                         break;
+                              case 'h' : print_usage();
+                                         exit(EXIT_FAILURE);
+                                         break;
+             default: print_usage(); 
+                      exit(EXIT_FAILURE);
+            }
+        }
+
 	// setup default parameters for sinus generator
-	struct Generator sinGenerator = {SINUS,         // signal type
-	                                 8.0,           // amplitude, 
-				         256,           // number of samples 
-				         NOISE_OFF,     // disable noise
-				         0.1,           // min noise level
-				         0.3,           // max noise level
-					 NOT_APPLICABLE
-				        };
+	struct Generator sin = {SINUS,         // signal type
+	                         1.0,           // amplitude, 
+				 256,           // number of samples 
+				 NOISE_OFF,     // disable noise
+				 0.1,           // min noise level
+				 0.3,           // max noise level
+				 NOT_APPLICABLE
+				};
 
 	struct Generator counter = {COUNTER,        // signal type
 	                            0,              // amplitude, 
@@ -142,7 +172,21 @@ int main(int argc, char *argv[])
 				 RAMP1           // ramp type
 				};
 
-        struct Generator *pSinusGenerator = Generator__create(&sinGenerator);
+	sin.amplitude    = amplitude;
+	ramp.amplitude   = amplitude;
+	square.amplitude = amplitude;
+
+	sin.numberOfSamples     = numberOfSamples;
+	counter.numberOfSamples = numberOfSamples;
+	ramp.numberOfSamples    = numberOfSamples;
+	square.numberOfSamples  = numberOfSamples;
+
+	sin.enableNoise     = enableNoise + NOISE_OFF_POS;
+	counter.enableNoise = enableNoise + NOISE_OFF_POS;
+	ramp.enableNoise    = enableNoise + NOISE_OFF_POS;
+	square.enableNoise  = enableNoise + NOISE_OFF_POS;
+
+        struct Generator *pSinusGenerator = Generator__create(&sin);
         Generator__run(pSinusGenerator);
 
         struct Generator *pCounterGenerator = Generator__create(&counter);
