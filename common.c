@@ -85,3 +85,45 @@ void Common__printProperties(struct Generator* gen)
 
         printf(DELIMITER);
 }
+
+void Common__fprintProperties(FILE *fp, struct Generator* gen)
+{
+	fprintf(fp, "%s", DELIMITER);
+
+        fprintf(fp, "Type: %s\n", ENUM2STRING(gen->type));
+
+	if (gen->type != COUNTER)
+	{
+                fprintf(fp, "Amplitude: %.4f\n", gen->amplitude);
+	}
+	else
+	{
+                fprintf(fp, "Amplitude: -\n");
+	}
+        fprintf(fp, "Number of samples: %d\n", gen->numberOfSamples);
+        fprintf(fp, "Noise enabled: %s\n", ENUM2STRING(gen->enableNoise));
+
+        if(gen->enableNoise == NOISE_ON)
+	{
+                fprintf(fp, "Min Noise level: %.4f\n", gen->minNoiseValue);
+                fprintf(fp, "Max Noise level: %.4f\n", gen->maxNoiseValue);
+	}
+	else
+	{
+                fprintf(fp, "Min Noise level: -\n");
+                fprintf(fp, "Max Noise level: -\n");
+	}
+
+	if (gen->type == RAMP)
+	{
+                fprintf(fp, "Ramp type: %s\n", ENUM2STRING(gen->rampSlopeType));
+	}
+	else
+	{
+                fprintf(fp, "Ramp type: -\n");
+	}
+
+	fprintf(fp, "Alpha: %.4f\n", gen->alpha);
+
+        fprintf(fp, "%s", DELIMITER);
+}

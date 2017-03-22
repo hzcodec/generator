@@ -21,6 +21,8 @@ float* Square_generator__generate_square(struct Generator *self)
 
         fp = fopen("square_samples.txt", "w");
 
+        Common__fprintProperties(fp, self);
+
         float *ar = (float *)malloc(sizeof(float) * (float)self->numberOfSamples);    
 	//float dist = (float)self->ratio/100.0 * (float)self->numberOfSamples;
 	float dist = 20.0/100.0 * (float)self->numberOfSamples;

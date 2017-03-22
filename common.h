@@ -3,5 +3,6 @@
 
 float Common__gen_noise(struct Generator* gen);
 void Common__printProperties(struct Generator* gen);
+void Common__fprintProperties(FILE *fp, struct Generator* gen);
 
 #endif

@@ -12,6 +12,8 @@ float* Counter_generator__generate_counter(struct Generator* self)
 	float noise = 0.0;
 
         fp = fopen("counter_samples.txt", "w");
+
+        Common__fprintProperties(fp, self);
         
         float *ar = (float *)malloc(sizeof(float) * self->numberOfSamples);    
 
