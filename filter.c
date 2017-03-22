@@ -31,6 +31,7 @@ void Filter__find_max_input_value(struct TriggerPoint *tp, float val, int n)
 	{
 		tp->maxValue = val;
 		tp->idx = n;
+
 		//printf("%s() - max:%.2f, idx:%d\n", __func__, tp->maxValue, tp->idx);
 	}
 }
@@ -61,10 +62,15 @@ void Filter__filter(float *ar, struct Generator *gen, char *s)
                 last = new;
         }
 
-        //float trigLevel = tp.maxValue * 0.75;
-	printf("'%s' created, Max input value: %.1f at index: %d, Max filter value: %.1f at index: %d\n", s, inputTp.maxValue, inputTp.idx, filterTp.maxValue, filterTp.idx);
+        float trigLevel = inputTp.maxValue * 0.75;
+	if (filterTp.maxValue > trigLevel)
+	{
+	        printf("%s%sMax level reached: %.1f%s\n", BOLD, RED, trigLevel, NRM);
+	}
+
+	printf("'%s' created\n", s);
+	printf("Max input value: %.1f at index: %d, Max filter value: %.1f at index: %d\n", inputTp.maxValue, inputTp.idx, filterTp.maxValue, filterTp.idx);
 
 	fclose(fp);
 }
 
- 
