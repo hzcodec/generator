@@ -32,10 +32,12 @@ struct Gen_properties {
 
 void print_usage()
 {
-    printf("Usage: -a [0.0-user def] -s [64-12288] -n [0|1] -r [1-4] -f [0.0-user def]\n");
+    printf("Usage: -a [0.0->] -s [64-12288] -n [0|1] -r [0.0 ->] -d [0.0 ->] -f [0.0->]\n");
     printf("       -a : amplitude\n");
     printf("       -s : number of samples\n");
     printf("       -n : enable noise\n");
+    printf("       -r : rise time\n");
+    printf("       -d : delay time\n");
     printf("       -f : alpha value for filter\n");
 }
 
@@ -127,7 +129,7 @@ int main(int argc, char *argv[])
 	gp.riseTime = 5.0;
 	gp.delayTime = 1.0;
 
-        while ((option = getopt(argc, argv,"a:s:n:r:f:h")) != -1)
+        while ((option = getopt(argc, argv,"a:s:n:r:d:f:h")) != -1)
 	{
             switch (option) {
                               case 'a' : gp.amplitude = atof(optarg);
@@ -136,6 +138,10 @@ int main(int argc, char *argv[])
                                          break;
                               case 'n' : noise = atoi(optarg);
 			                 gp.enableNoise = noise ? NOISE_ON : NOISE_OFF; 
+                                         break;
+                              case 'r' : gp.riseTime= atof(optarg);
+                                         break;
+                              case 'd' : gp.delayTime= atof(optarg);
                                          break;
                               case 'f' : gp.alpha= atof(optarg);
                                          break;
