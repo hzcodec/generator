@@ -100,6 +100,14 @@ void Generator__destroy(struct Generator* gen)
 
 void Generator__populate_object(struct Generator *self, struct Gen_properties *gp)
 {
+	if (gp->numberOfSamples < (int)(gp->riseTime/SAMPLE_TIME*1000))
+	{
+		printf("***\n");
+		printf("Warning! You must increase number of samples. Minumum is %d\n", (int)(gp->riseTime/SAMPLE_TIME*1000));
+		printf("***\n");
+		exit(-1);
+	}
+
 	self->amplitude = gp->amplitude;
 	self->numberOfSamples = gp->numberOfSamples;
 	self->enableNoise = gp->enableNoise;
