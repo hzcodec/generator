@@ -1,0 +1,69 @@
+#!/usr/bin/env python
+import sys
+from pylab import *
+
+NUMBER_OF_FIELDS = 11
+ALPHA_POS = 2
+SAMPLING_TIME = 83.0 # us
+
+font = {'family': 'monospace',
+        'color':  'black',
+        'weight': 'bold',
+        'size': 12,
+        }
+
+data = []
+
+try:
+    sel = sys.argv[1]
+except IndexError:
+    print 'Error! You must enter a parameter ./plot [1-2]'
+    sys.exit()
+
+
+if (sel == '1'):
+    print 'Ramp samples read\n'
+    lines1 = [line.rstrip('\n') for line in open('ramp_samples.txt')]
+    num_lines = sum(1 for line in open('ramp_samples.txt'))
+    print 'Filtered ramp read\n'
+    lines2 = [line.rstrip('\n') for line in open('filtered_ramp.txt')]
+
+
+try:
+    t = arange(0, num_lines-NUMBER_OF_FIELDS, 1)
+except NameError:
+    print 'Error! Incorrect choise, only between 1-6'
+    sys.exit()
+
+
+# calculate total time and convert to ms
+totTime = (num_lines-NUMBER_OF_FIELDS) * SAMPLING_TIME / 1000.0
+
+# just make a copy of the list except the header info
+data = lines1[11:num_lines]
+data2 = lines2[11:num_lines]
+
+# find max y value, used to place text
+ypos = 1.5 * float(max(data))
+
+# get input type string
+inputType = lines1[1]
+
+#plot(t, data, marker='o', linestyle='-.', color='b')
+plot(t, data)
+plot(t, data2)
+
+
+fig = gcf()
+fig.canvas.set_window_title('Filter test')
+
+plt.text(0.6*num_lines, ypos, inputType, fontdict=font)
+
+xlabel('samples')
+ylabel('i')
+
+title(str(lines1[ALPHA_POS])+',  Total time:'+str(totTime)+' ms')
+
+grid(True)
+show()
+
