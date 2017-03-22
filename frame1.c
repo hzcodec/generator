@@ -47,7 +47,7 @@ void Generator__printProperties(struct Generator* self)
 	}
 	else
 	{
-                printf("Amplitude: NOT_APPLICABLE\n");
+                printf("Amplitude: -\n");
 	}
         printf("Number of samples: %d\n", self->numberOfSamples);
         printf("Noise enabled: %s\n", ENUM2STRING(self->enableNoise));
@@ -59,8 +59,8 @@ void Generator__printProperties(struct Generator* self)
 	}
 	else
 	{
-                printf("Min Noise level: NOT_APPLICABLE\n");
-                printf("Max Noise level: NOT_APPLICABLE\n");
+                printf("Min Noise level: -\n");
+                printf("Max Noise level: -\n");
 	}
 
 	if (self->type == RAMP)
@@ -69,7 +69,7 @@ void Generator__printProperties(struct Generator* self)
 	}
 	else
 	{
-                printf("Ramp type: NOT APPLICABLE\n");
+                printf("Ramp type: -\n");
 	}
         printf(DELIMITER);
 }
