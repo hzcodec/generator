@@ -142,6 +142,7 @@ void Generator__populate_object(struct Generator *self, struct Gen_properties *g
 	self->numberOfSamples = gp->numberOfSamples;
 	self->enableNoise = gp->enableNoise;
 	self->rampSlopeType = gp->rampSlopeType;
+	self->alpha = gp->alpha;
 }
 
 

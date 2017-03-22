@@ -21,10 +21,9 @@ void Filter__filter(float *ar, struct Generator *gen)
 
         for(int n=0; n<gen->numberOfSamples; n++)
         {
-	        // printf("%s() - ar[%d]: %.4f\n", __func__, n, ar[n]);
+	        //printf("%s() - alpha: %.4f, ar[%d]: %.4f\n", __func__, gen->alpha, n, ar[n]);
                 new = ar[n];
-                //new = last + gen->alpha*(new - last);
-                new = last + 0.01*(new - last);
+                new = last + gen->alpha*(new - last);
 
                 fprintf(fp, "%.4f\n", new);
                 last = new;
