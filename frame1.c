@@ -245,11 +245,11 @@ int main(int argc, char *argv[])
         Generator__populate_object(&ramp, &gp);
         Generator__populate_object(&square, &gp);
 
-        //struct Generator *pSinusGenerator = Generator__create(&sin);
-        //Generator__run(pSinusGenerator);
+        struct Generator *pSinusGenerator = Generator__create(&sin);
+        Generator__run(pSinusGenerator);
 
-        //struct Generator *pCounterGenerator = Generator__create(&counter);
-        //Generator__run(pCounterGenerator);
+        struct Generator *pCounterGenerator = Generator__create(&counter);
+        Generator__run(pCounterGenerator);
 
         struct Generator *pRampGenerator = Generator__create(&ramp);
         rampArray = Generator__run(pRampGenerator);
@@ -260,8 +260,8 @@ int main(int argc, char *argv[])
         Filter__filter(rampArray, pRampGenerator, "filtered_ramp.txt");
         Filter__filter(squareArray, pSquareGenerator, "filtered_square.txt");
 
-        //Generator__destroy(pSinusGenerator); 
-        //Generator__destroy(pCounterGenerator); 
+        Generator__destroy(pSinusGenerator); 
+        Generator__destroy(pCounterGenerator); 
         Generator__destroy(pRampGenerator); 
         Generator__destroy(pSquareGenerator); 
 
