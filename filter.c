@@ -12,30 +12,27 @@
 #include <math.h>
 #include "frame1.h"
 #include "common.h"
+#include "filter.h"
 
-struct TriggerPoint {
-  	float maxValue;
-	int   idx;
-};
 
-//void Filter__find_max_filter_value(struct TriggerPoint *tp, float val, int n)
-//{
-// 	if (val > tp->maxValue)
-//	{
-//		tp->maxValue = val;
-//		tp->idx = n;
-//		printf("%s() - max:%.2f, idx:%d\n", __func__, tp->maxValue, tp->idx);
-//	}
-//}
+void Filter__find_max_filter_value(struct TriggerPoint *tp, float val, int n)
+{
+ 	if (val > tp->maxValue)
+	{
+		tp->maxValue = val;
+		tp->idx = n;
+		//printf("%s() - max:%.2f, idx:%d\n", __func__, tp->maxValue, tp->idx);
+	}
+}
 
 void Filter__find_max_input_value(struct TriggerPoint *tp, float val, int n)
 {
-// 	if (val > tp->maxValue)
-//	{
-//		tp->maxValue = val;
-//		tp->idx = n;
-//		printf("%s() - max:%.2f, idx:%d\n", __func__, tp->maxValue, tp->idx);
-//	}
+ 	if (val > tp->maxValue)
+	{
+		tp->maxValue = val;
+		tp->idx = n;
+		//printf("%s() - max:%.2f, idx:%d\n", __func__, tp->maxValue, tp->idx);
+	}
 }
 
 void Filter__filter(float *ar, struct Generator *gen, char *s)
@@ -44,8 +41,8 @@ void Filter__filter(float *ar, struct Generator *gen, char *s)
 
         float new = 0.0;
         float last = 0.0;
-	struct TriggerPoint inputTp;
-	struct TriggerPoint filterTp;
+	struct TriggerPoint inputTp = {0.0, 0};
+	struct TriggerPoint filterTp = {0.0, 0};
  
         fp = fopen(s, "w");
 
@@ -58,7 +55,7 @@ void Filter__filter(float *ar, struct Generator *gen, char *s)
 		Filter__find_max_input_value(&inputTp, ar[n], n);
                 new = ar[n];
                 new = last + gen->alpha*(new - last);
-		//Filter__find_max_filter_value(&filterTp, new, n);
+		Filter__find_max_filter_value(&filterTp, new, n);
 
                 fprintf(fp, "%.4f\n", new);
                 last = new;
