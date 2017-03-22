@@ -152,7 +152,8 @@ int main(int argc, char *argv[])
         int select = 1;
 	int noise  = NOISE_OFF;   // noise off
 	int rt     = RAMP1;       // ramp type 1
-        float* array;             // array holding sample values
+        float* squareArray;       // array holding sample values
+        float* rampArray;         // array holding sample values
 
 	struct Gen_properties gp;
 
@@ -251,12 +252,13 @@ int main(int argc, char *argv[])
         Generator__run(pCounterGenerator);
 
         struct Generator *pRampGenerator = Generator__create(&ramp);
-        array = Generator__run(pRampGenerator);
+        rampArray = Generator__run(pRampGenerator);
 
         struct Generator *pSquareGenerator = Generator__create(&square);
-        Generator__run(pSquareGenerator);
+        squareArray = Generator__run(pSquareGenerator);
 
-        Filter__filter(array, pSquareGenerator);
+        Filter__filter(rampArray, pSquareGenerator, "filtered_ramp.txt");
+        Filter__filter(squareArray, pSquareGenerator, "filtered_square.txt");
 
         Generator__destroy(pSinusGenerator); 
         Generator__destroy(pCounterGenerator); 

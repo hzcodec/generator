@@ -8,16 +8,18 @@
  
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include "frame1.h"
 
 static float new = 0.0;
 static float last = 0.0;
  
-void Filter__filter(float *ar, struct Generator *gen)
+void Filter__filter(float *ar, struct Generator *gen, char *s)
 {
         FILE *fp;
-        fp = fopen("filter.txt", "w");
+	printf("name: %s\n", s);
+        fp = fopen(s, "w");
 
         for(int n=0; n<gen->numberOfSamples; n++)
         {
