@@ -24,8 +24,9 @@ struct Gen_properties {
         float amplitude;
 	int   numberOfSamples;
 	int   enableNoise;
-	int   rampSlopeType;
 	float alpha;
+	float riseTime;   // [ms]
+	float delayTime;  // [ms]
 };
 
 
@@ -34,7 +35,6 @@ void print_usage()
     printf("Usage: -a [0.0-user def] -s [64-12288] -n [0|1] -r [1-4] -f [0.0-user def]\n");
     printf("       -a : amplitude\n");
     printf("       -s : number of samples\n");
-    printf("       -r : ramp type [1 -4]\n");
     printf("       -n : enable noise\n");
     printf("       -f : alpha value for filter\n");
 }
@@ -69,8 +69,9 @@ struct Generator* Generator__create(struct Generator* gen)
         generatorObject->enableNoise = gen->enableNoise;
         generatorObject->minNoiseValue = gen->minNoiseValue;
         generatorObject->maxNoiseValue = gen->maxNoiseValue;
-        generatorObject->rampSlopeType = gen->rampSlopeType;
         generatorObject->alpha         = gen->alpha;
+        generatorObject->riseTime      = gen->riseTime;
+        generatorObject->delayTime      = gen->delayTime;
 
 	return generatorObject;
 }
@@ -100,8 +101,9 @@ void Generator__populate_object(struct Generator *self, struct Gen_properties *g
 	self->amplitude = gp->amplitude;
 	self->numberOfSamples = gp->numberOfSamples;
 	self->enableNoise = gp->enableNoise;
-	self->rampSlopeType = gp->rampSlopeType;
 	self->alpha = gp->alpha;
+	self->riseTime = gp->riseTime;
+	self->delayTime = gp->delayTime;
 }
 
 
@@ -119,10 +121,11 @@ int main(int argc, char *argv[])
 
 	// default values
 	gp.amplitude = 1.0; 
-	gp.numberOfSamples = 128; 
+	gp.numberOfSamples = 256; 
 	gp.enableNoise = NOISE_OFF;
-	gp.rampSlopeType = RAMP1;
 	gp.alpha = 0.01;
+	gp.riseTime = 5.0;
+	gp.delayTime = 1.0;
 
         while ((option = getopt(argc, argv,"a:s:n:r:f:h")) != -1)
 	{
@@ -133,21 +136,6 @@ int main(int argc, char *argv[])
                                          break;
                               case 'n' : noise = atoi(optarg);
 			                 gp.enableNoise = noise ? NOISE_ON : NOISE_OFF; 
-                                         break;
-                              case 'r' : rt = atoi(optarg);
-					 switch (rt)
-					 {
-					     case 1: gp.rampSlopeType = RAMP1; 
-					             break;
-					     case 2: gp.rampSlopeType = RAMP2; 
-					             break;
-					     case 3: gp.rampSlopeType = RAMP3; 
-					             break;
-					     case 4: gp.rampSlopeType = RAMP4; 
-					             break;
-					     default: gp.rampSlopeType = RAMP1; 
-					              break;
-					 }
                                          break;
                               case 'f' : gp.alpha= atof(optarg);
                                          break;
@@ -166,8 +154,9 @@ int main(int argc, char *argv[])
 				NOISE_OFF,       // disable noise
 				0.1,             // min noise level
 				0.3,             // max noise level
-				NOT_APPLICABLE,
-				0.01             // alpha value for filter
+				0.01,            // alpha value for filter
+				NOT_APPLICABLE,  
+				NOT_APPLICABLE   
 			       };
 
 	struct Generator counter = {COUNTER,        // signal type
@@ -176,8 +165,9 @@ int main(int argc, char *argv[])
 				    NOISE_ON,       // enable noise
 				    0.1,            // min noise level
 				    0.3,            // max noise level
-				    NOT_APPLICABLE,
-				    0.01            // alpha value for filter
+				    0.01,           // alpha value for filter
+				    NOT_APPLICABLE,  
+				    NOT_APPLICABLE   
 				   };
 
 	struct Generator ramp = {RAMP,           // signal type
@@ -186,24 +176,26 @@ int main(int argc, char *argv[])
 				 NOISE_OFF,      // enable noise
 				 0.1,            // min noise level
 				 0.3,            // max noise level
-				 RAMP1,          // ramp type
-				 0.01            // alpha value for filter
+				 0.01,           // alpha value for filter
+				 1.0,             // rise time
+				 2.0              // delay time
 				};
 
-	struct Generator square = {SQUARE,       // signal type
-	                           2.0,          // amplitude, 
-				   1024,         // number of samples 
-				   NOISE_ON,     // enable noise
-				   0.1,          // min noise level
-				   0.3,          // max noise level
-				   RAMP1,        // ramp type
-				   0.01          // alpha value for filter
+	struct Generator square = {SQUARE,         // signal type
+	                           2.0,            // amplitude, 
+				   1024,           // number of samples 
+				   NOISE_ON,       // enable noise
+				   0.1,            // min noise level
+				   0.3,            // max noise level
+				   0.01,           // alpha value for filter
+				   NOT_APPLICABLE,  
+				   NOT_APPLICABLE   
 				  };
 
-        Generator__populate_object(&sin, &gp);
-        Generator__populate_object(&counter, &gp);
         Generator__populate_object(&ramp, &gp);
-        Generator__populate_object(&square, &gp);
+        //Generator__populate_object(&sin, &gp);
+        //Generator__populate_object(&counter, &gp);
+        //Generator__populate_object(&square, &gp);
 
         struct Generator *pRampGenerator = Generator__create(&ramp);
         rampArray = Generator__run(pRampGenerator);

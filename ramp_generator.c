@@ -11,59 +11,33 @@
 #include <string.h>
 #include "frame1.h"
 #include "common.h"
+
+#define OFFS 50
  
 float* Ramp_generator__generate_ramp(struct Generator* self)
 {
-	//printf("%s() - \n", __func__);
         FILE *fp;
-	float yVal;
+	float yVal = 0.0;
 	float noise = 0.0;
-	float minValue = 1;
-	int   slopeStart = 0.1 * self->numberOfSamples; // start of slope condition, 10% of max number of samples
-	int   slopeEnd = 0; // end slope value
+	float minValue = 0;
+
+	int sampleRiseTime = (int)(self->riseTime/SAMPLE_TIME*1000);
+	int sampleDelayTime = (int)(self->delayTime/SAMPLE_TIME*1000);
 
         float *ar = (float *)malloc(sizeof(float) * self->numberOfSamples);    
         fp = fopen("ramp_samples.txt", "w");
 
         Common__fprintProperties(fp, self);
 
-
-	// calculate where the slopa shall start
-	switch(self->rampSlopeType)
-	{
-	    case RAMP1: slopeEnd = slopeStart + 10;
-		        break;
-	    case RAMP2: slopeEnd = slopeStart + 30;
-		        break;
-	    case RAMP3: slopeEnd = slopeStart + 50;
-		        break;
-	    case RAMP4: slopeEnd = slopeStart + 70;
-		        break;
-            default: slopeEnd = 200;
-		     break;
-	}
-
-	// generate samples before slope starts
-        for (int i=0; i<slopeStart; i++)
-	{
-	    if (self->enableNoise == NOISE_ON)
-	    {
-                noise = Common__gen_noise(self) / 4;
-	    }
-
-	    fprintf(fp, "%.4f\n", minValue + noise);
-	    ar[i] = minValue + noise;
-	    //printf("%s(1) - ar[%d]: %.4f, slopeStart: %d, slopeEnd: %d\n", __func__, i, ar[i], slopeStart, slopeEnd);
-	}
-
+        printf("sampleRiseTime: %d, sampleDelayTime: %d\n", sampleRiseTime, sampleDelayTime);
 
 	// calculate the slope
-        for (int i=0; i<slopeEnd; i++)
+        for (int i=0; i<sampleRiseTime; i++)
 	{
-	    float x1 = slopeStart;
+	    float x1 = 0;
 	    float y1 = 0;
 
-	    float x2 = slopeEnd;
+	    float x2 = sampleRiseTime;
 	    float y2 = self->amplitude;
 
             float k = (y2-y1) / (x2-x1);
@@ -75,27 +49,41 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
 	    }
 
 	    fprintf(fp, "%.4f\n", yVal + minValue + noise);
-	    ar[i+slopeStart] = yVal + minValue + noise;
-	    //printf("%s(2) - ar[%d]: %.4f, slopeEnd: %d, slopeStart: %d\n", __func__, i+slopeStart, ar[i+slopeStart], slopeEnd, slopeStart);
+	    ar[i] = yVal + minValue + noise;
+	    //printf("%s(2) - ar[%d]: %.4f, sampleRiseTime: %d, sampleDelayTime: %d\n", __func__, i, ar[i], sampleRiseTime, sampleDelayTime);
 	}
 
-        // go back to original level
-        //for (int i=slopeEnd+1; i<self->numberOfSamples; i++)
-        for (int i=0; i<(self->numberOfSamples - (slopeStart+slopeEnd)); i++)
+        printf("\n");
+        // top level
+        for (int i=0; i<sampleDelayTime; i++)
 	{
 	    if (self->enableNoise == NOISE_ON)
 	    {
                 noise = Common__gen_noise(self) / 4;
 	    }
 
-	    fprintf(fp, "%.4f\n", (yVal + minValue));
-	    ar[i+slopeStart+slopeEnd] = yVal + minValue + noise;
-	    //printf("%s(3) - ar[%d]: %.4f\n", __func__, i+slopeStart+slopeEnd, ar[i+slopeStart+slopeEnd]);
+	    fprintf(fp, "%.4f\n", (yVal + minValue + noise));
+	    ar[i+sampleRiseTime] = yVal + minValue + noise;
+	    //printf("%s(3) - ar[%d]: %.4f\n", __func__, i+sampleRiseTime, ar[i+sampleRiseTime]);
+	}
+
+        printf("\n");
+        // go back to original level
+        for (int i=0; i<self->numberOfSamples-(sampleRiseTime+sampleDelayTime); i++)
+	{
+	    if (self->enableNoise == NOISE_ON)
+	    {
+                noise = Common__gen_noise(self) / 4;
+	    }
+
+	    fprintf(fp, "%.4f\n", (minValue + noise));
+	    ar[i+(sampleRiseTime+sampleDelayTime)] = minValue + noise;
+	    //printf("%s(3) - ar[%d]: %.4f\n", __func__, i+sampleRiseTime+sampleDelayTime, ar[i+sampleRiseTime+sampleDelayTime]);
 	}
 
 	fclose(fp);
 
-	printf("'ramp_samples.txt' created with slope type: %s\n", ENUM2STRING(self->rampSlopeType));
+	printf("'ramp_samples.txt' created\n");
 
 	return ar;
 }

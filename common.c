@@ -72,15 +72,6 @@ void Common__printProperties(struct Generator* gen)
                 printf("Max Noise level: -\n");
 	}
 
-	if (gen->type == RAMP)
-	{
-                printf("Ramp type: %s\n", ENUM2STRING(gen->rampSlopeType));
-	}
-	else
-	{
-                printf("Ramp type: -\n");
-	}
-
 	printf("Alpha: %.4f\n", gen->alpha);
 
         printf(DELIMITER);
@@ -112,15 +103,6 @@ void Common__fprintProperties(FILE *fp, struct Generator* gen)
 	{
                 fprintf(fp, "Min Noise level: -\n");
                 fprintf(fp, "Max Noise level: -\n");
-	}
-
-	if (gen->type == RAMP)
-	{
-                fprintf(fp, "Ramp type: %s\n", ENUM2STRING(gen->rampSlopeType));
-	}
-	else
-	{
-                fprintf(fp, "Ramp type: -\n");
 	}
 
 	fprintf(fp, "Alpha: %.4f\n", gen->alpha);
