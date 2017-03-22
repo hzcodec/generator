@@ -35,7 +35,7 @@ float* Square_generator__generate_square(struct Generator *self)
 	    }
             ar[i] = (out + noise) * self->amplitude;
             fprintf(fp, "%.4f\n", (out + noise) * self->amplitude);
-	    //printf("ar[%d]:%.4f\n", i, ar[i]);
+	    printf("%s() - ar[%d]:%.4f\n", __func__, i, ar[i]);
 	}
 
 	out = 1.0;
@@ -47,6 +47,7 @@ float* Square_generator__generate_square(struct Generator *self)
 	    }
             ar[i] = (out + noise) * self->amplitude;
             fprintf(fp, "%.4f\n", (out + noise) * self->amplitude);
+	    printf("%s() - ar[%d]:%.4f\n", __func__, i, ar[i]);
 	}
 
 	out = 0.0;
@@ -58,6 +59,7 @@ float* Square_generator__generate_square(struct Generator *self)
 	    }
             ar[i] = (out + noise) * self->amplitude;
             fprintf(fp, "%.4f\n", (out + noise) * self->amplitude);
+	    printf("%s() - ar[%d]:%.4f\n", __func__, i, ar[i]);
 	}
 
 	fclose(fp);
