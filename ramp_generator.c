@@ -19,68 +19,81 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
 	float yVal;
 	float noise = 0.0;
 	float minValue = 1;
-	int   rampStartValue = 0.1 * self->numberOfSamples; // start condition 10% of max samples
-	int   idx;
+	int   slopeStart = 0.1 * self->numberOfSamples; // start of slope condition, 10% of max number of samples
+	int   slopeEnd = 0; // end slope value
 
         float *ar = (float *)malloc(sizeof(float) * self->numberOfSamples);    
         fp = fopen("ramp_samples.txt", "w");
 
         Common__fprintProperties(fp, self);
 
-        for (int i=0; i<rampStartValue; i++)
-	{
-	    if (self->enableNoise == NOISE_ON)
-	    {
-                //noise = rand_interval(self->minNoise, self->maxNoise);
-	    }
-	    fprintf(fp, "%.4f\n", minValue + noise);
-	    ar[i] = minValue + noise;
-	}
 
+	// calculate where the slopa shall start
 	switch(self->rampSlopeType)
 	{
-	    case RAMP1: idx = (int)(0.05*(float)self->numberOfSamples);
+	    case RAMP1: slopeEnd = slopeStart + 10;
 		        break;
-	    case RAMP2: idx = (int)(0.25*(float)self->numberOfSamples);
+	    case RAMP2: slopeEnd = slopeStart + 30;
 		        break;
-	    case RAMP3: idx = (int)(0.50*(float)self->numberOfSamples);
+	    case RAMP3: slopeEnd = slopeStart + 50;
 		        break;
-	    case RAMP4: idx = (int)(0.75*(float)self->numberOfSamples);
+	    case RAMP4: slopeEnd = slopeStart + 70;
 		        break;
-            default: idx = 200;
+            default: slopeEnd = 200;
 		     break;
 	}
 
-        for (int i=0; i<idx+1; i++)
+	// generate samples before slope starts
+        for (int i=0; i<slopeStart; i++)
 	{
-	    float x1 = 0;
+	    if (self->enableNoise == NOISE_ON)
+	    {
+                noise = Common__gen_noise(self) / 4;
+	    }
+
+	    fprintf(fp, "%.4f\n", minValue + noise);
+	    ar[i] = minValue + noise;
+	    printf("%s(1) - ar[%d]: %.4f, slopeStart: %d, slopeEnd: %d\n", __func__, i, ar[i], slopeStart, slopeEnd);
+	}
+
+
+	printf("\n");
+	// calculate the slope
+        for (int i=0; i<slopeEnd; i++)
+	{
+	    float x1 = slopeStart;
 	    float y1 = 0;
 
-	    float x2 = idx;
+	    float x2 = slopeEnd;
 	    float y2 = self->amplitude;
 
             float k = (y2-y1) / (x2-x1);
 	    yVal = k*i;
-	    //printf("x1:%.4f, y1:%.4f, x2:%.4f, y2:%.4f, rampStartValue:%d, minValue:%.4f, k[%d]:%.4f, yVal:%.4f\n", x1, y1, x2, y2, rampStartValue, minValue, i, k, yVal);
 
+            //printf("%s() - k: %.4f, yVal: %.4f\n", __func__, k, yVal);
 	    if (self->enableNoise == NOISE_ON)
 	    {
-                //noise = rand_interval(self->minNoiseValue, self->maxNoiseValue);
+                noise = Common__gen_noise(self) / 4;
 	    }
-	    fprintf(fp, "%.4f\n", yVal + minValue);
-	    ar[i] = yVal;
-	    //printf("%s(1) - ar[%d]: %.4f, idx: %d\n", __func__, i, ar[i], idx);
+
+	    fprintf(fp, "%.4f\n", yVal + minValue + noise);
+	    ar[i+slopeStart] = yVal + minValue + noise;
+	    printf("%s(2) - ar[%d]: %.4f, slopeEnd: %d, slopeStart: %d\n", __func__, i+slopeStart, ar[i+slopeStart], slopeEnd, slopeStart);
 	}
 
-        for (int i=idx+1; i<self->numberOfSamples; i++)
+	printf("\n");
+        // go back to original level
+        //for (int i=slopeEnd+1; i<self->numberOfSamples; i++)
+        for (int i=0; i<(self->numberOfSamples - (slopeStart+slopeEnd)); i++)
 	{
 	    if (self->enableNoise == NOISE_ON)
 	    {
-                //noise = rand_interval(self->minNoiseValue, self->maxNoiseValue);
+                noise = Common__gen_noise(self) / 4;
 	    }
+
 	    fprintf(fp, "%.4f\n", (yVal + minValue));
-	    ar[i] = self->amplitude + noise;
-	    //printf("%s(2) - ar[%d]: %.4f\n", __func__, i, ar[i]);
+	    ar[i+slopeStart+slopeEnd] = yVal + minValue + noise;
+	    printf("%s(3) - ar[%d]: %.4f\n", __func__, i+slopeStart+slopeEnd, ar[i+slopeStart+slopeEnd]);
 	}
 
 	fclose(fp);
