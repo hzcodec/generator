@@ -67,6 +67,7 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
 	    }
 	    fprintf(fp, "%.4f\n", yVal + minValue);
 	    ar[i] = yVal;
+	    //printf("%s() - ar[%d]: %.4f\n", __func__, i, ar[i]);
 	}
 
         for (int i=rampStartValue+idx; i<self->numberOfSamples; i++)
@@ -77,6 +78,7 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
 	    }
 	    fprintf(fp, "%.4f\n", (yVal + minValue));
 	    ar[i] = self->amplitude + noise;
+	    //printf("%s() - ar[%d]: %.4f\n", __func__, i, ar[i]);
 	}
 
 	fclose(fp);

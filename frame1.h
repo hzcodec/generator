@@ -42,6 +42,7 @@ struct Generator{
    float  minNoiseValue;             // minimum noise level
    float  maxNoiseValue;             // maximum noise level
    int    rampSlopeType;             // ramp slope type
+   float  alpha;                     // alpha value for filter
    float* (*gen)(struct Generator*); // callback function
    char   name[20];                  // filename of logfile
 };
