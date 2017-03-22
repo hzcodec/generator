@@ -29,8 +29,6 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
 
         Common__fprintProperties(fp, self);
 
-        printf("sampleRiseTime: %d, sampleDelayTime: %d\n", sampleRiseTime, sampleDelayTime);
-
 	// calculate the slope
         for (int i=0; i<sampleRiseTime; i++)
 	{

@@ -73,8 +73,8 @@ void Common__printProperties(struct Generator* gen)
 	}
 
 	printf("Alpha: %.4f\n", gen->alpha);
-	printf("Rise time: %.4f\n", gen->riseTime);
-	printf("Delay time: %.4f\n", gen->delayTime);
+	printf("Rise time for ramp: %.4f ms\n", gen->riseTime);
+	printf("Delay time for ramp: %.4f ms\n", gen->delayTime);
 
         printf(DELIMITER);
 }
@@ -108,8 +108,8 @@ void Common__fprintProperties(FILE *fp, struct Generator* gen)
 	}
 
 	fprintf(fp, "Alpha: %.4f\n", gen->alpha);
-	fprintf(fp, "Rise time: %.4f\n", gen->riseTime);
-	fprintf(fp, "Delay time: %.4f\n", gen->delayTime);
+	fprintf(fp, "Rise time for ramp: %.4f ms\n", gen->riseTime);
+	fprintf(fp, "Delay time for ramp: %.4f ms\n", gen->delayTime);
 
         fprintf(fp, "%s", DELIMITER);
 }
