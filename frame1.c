@@ -113,6 +113,7 @@ int main(int argc, char *argv[])
 	int rt     = RAMP1;       // ramp type 1
         float* squareArray;       // array holding sample values
         float* rampArray;         // array holding sample values
+        float* sinusArray;        // array holding sample values
 
 	struct Gen_properties gp;
 
@@ -205,7 +206,7 @@ int main(int argc, char *argv[])
         Generator__populate_object(&square, &gp);
 
         struct Generator *pSinusGenerator = Generator__create(&sin);
-        Generator__run(pSinusGenerator);
+        sinusArray = Generator__run(pSinusGenerator);
 
         struct Generator *pCounterGenerator = Generator__create(&counter);
         Generator__run(pCounterGenerator);
@@ -216,6 +217,7 @@ int main(int argc, char *argv[])
         struct Generator *pSquareGenerator = Generator__create(&square);
         squareArray = Generator__run(pSquareGenerator);
 
+        Filter__filter(sinusArray, pSinusGenerator, "filtered_sinus.txt");
         Filter__filter(rampArray, pRampGenerator, "filtered_ramp.txt");
         Filter__filter(squareArray, pSquareGenerator, "filtered_square.txt");
 

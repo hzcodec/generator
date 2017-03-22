@@ -11,6 +11,7 @@
 #include <string.h>
 #include <math.h>
 #include "frame1.h"
+#include "common.h"
 
 void Filter__filter(float *ar, struct Generator *gen, char *s)
 {
@@ -20,6 +21,8 @@ void Filter__filter(float *ar, struct Generator *gen, char *s)
         float last = 0.0;
  
         fp = fopen(s, "w");
+
+        Common__fprintProperties(fp, gen);
 
         for(int n=0; n<gen->numberOfSamples; n++)
         {
