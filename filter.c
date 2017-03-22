@@ -34,6 +34,8 @@ void Filter__filter(float *ar, struct Generator *gen, char *s)
                 last = new;
         }
 
+	printf("'%s' created\n", s);
+
 	fclose(fp);
 }
 

@@ -53,11 +53,10 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
 
 	    fprintf(fp, "%.4f\n", minValue + noise);
 	    ar[i] = minValue + noise;
-	    printf("%s(1) - ar[%d]: %.4f, slopeStart: %d, slopeEnd: %d\n", __func__, i, ar[i], slopeStart, slopeEnd);
+	    //printf("%s(1) - ar[%d]: %.4f, slopeStart: %d, slopeEnd: %d\n", __func__, i, ar[i], slopeStart, slopeEnd);
 	}
 
 
-	printf("\n");
 	// calculate the slope
         for (int i=0; i<slopeEnd; i++)
 	{
@@ -70,7 +69,6 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
             float k = (y2-y1) / (x2-x1);
 	    yVal = k*i;
 
-            //printf("%s() - k: %.4f, yVal: %.4f\n", __func__, k, yVal);
 	    if (self->enableNoise == NOISE_ON)
 	    {
                 noise = Common__gen_noise(self) / 4;
@@ -78,10 +76,9 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
 
 	    fprintf(fp, "%.4f\n", yVal + minValue + noise);
 	    ar[i+slopeStart] = yVal + minValue + noise;
-	    printf("%s(2) - ar[%d]: %.4f, slopeEnd: %d, slopeStart: %d\n", __func__, i+slopeStart, ar[i+slopeStart], slopeEnd, slopeStart);
+	    //printf("%s(2) - ar[%d]: %.4f, slopeEnd: %d, slopeStart: %d\n", __func__, i+slopeStart, ar[i+slopeStart], slopeEnd, slopeStart);
 	}
 
-	printf("\n");
         // go back to original level
         //for (int i=slopeEnd+1; i<self->numberOfSamples; i++)
         for (int i=0; i<(self->numberOfSamples - (slopeStart+slopeEnd)); i++)
@@ -93,7 +90,7 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
 
 	    fprintf(fp, "%.4f\n", (yVal + minValue));
 	    ar[i+slopeStart+slopeEnd] = yVal + minValue + noise;
-	    printf("%s(3) - ar[%d]: %.4f\n", __func__, i+slopeStart+slopeEnd, ar[i+slopeStart+slopeEnd]);
+	    //printf("%s(3) - ar[%d]: %.4f\n", __func__, i+slopeStart+slopeEnd, ar[i+slopeStart+slopeEnd]);
 	}
 
 	fclose(fp);
