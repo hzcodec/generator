@@ -44,3 +44,44 @@ float Common__gen_noise(struct Generator* gen)
 	return noise;
 }
 
+void Common__printProperties(struct Generator* gen)
+{
+        printf(DELIMITER);
+
+        printf("Type: %s\n", ENUM2STRING(gen->type));
+
+	if (gen->type != COUNTER)
+	{
+                printf("Amplitude: %.4f\n", gen->amplitude);
+	}
+	else
+	{
+                printf("Amplitude: -\n");
+	}
+        printf("Number of samples: %d\n", gen->numberOfSamples);
+        printf("Noise enabled: %s\n", ENUM2STRING(gen->enableNoise));
+
+        if(gen->enableNoise == NOISE_ON)
+	{
+                printf("Min Noise level: %.4f\n", gen->minNoiseValue);
+                printf("Max Noise level: %.4f\n", gen->maxNoiseValue);
+	}
+	else
+	{
+                printf("Min Noise level: -\n");
+                printf("Max Noise level: -\n");
+	}
+
+	if (gen->type == RAMP)
+	{
+                printf("Ramp type: %s\n", ENUM2STRING(gen->rampSlopeType));
+	}
+	else
+	{
+                printf("Ramp type: -\n");
+	}
+
+	printf("Alpha: %.4f\n", gen->alpha);
+
+        printf(DELIMITER);
+}

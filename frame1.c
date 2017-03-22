@@ -18,6 +18,7 @@
 #include "ramp_generator.h"
 #include "square_generator.h"
 #include "filter.h"
+#include "common.h"
 
 struct Gen_properties {
         float amplitude;
@@ -36,48 +37,6 @@ void print_usage()
     printf("       -r : ramp type [1 -4]\n");
     printf("       -n : enable noise\n");
     printf("       -f : alpha value for filter\n");
-}
-
-void Generator__printProperties(struct Generator* self)
-{
-        printf(DELIMITER);
-
-        printf("Type: %s\n", ENUM2STRING(self->type));
-
-	if (self->type != COUNTER)
-	{
-                printf("Amplitude: %.4f\n", self->amplitude);
-	}
-	else
-	{
-                printf("Amplitude: -\n");
-	}
-        printf("Number of samples: %d\n", self->numberOfSamples);
-        printf("Noise enabled: %s\n", ENUM2STRING(self->enableNoise));
-
-        if(self->enableNoise == NOISE_ON)
-	{
-                printf("Min Noise level: %.4f\n", self->minNoiseValue);
-                printf("Max Noise level: %.4f\n", self->maxNoiseValue);
-	}
-	else
-	{
-                printf("Min Noise level: -\n");
-                printf("Max Noise level: -\n");
-	}
-
-	if (self->type == RAMP)
-	{
-                printf("Ramp type: %s\n", ENUM2STRING(self->rampSlopeType));
-	}
-	else
-	{
-                printf("Ramp type: -\n");
-	}
-
-	printf("Alpha: %.4f\n", self->alpha);
-
-        printf(DELIMITER);
 }
 
 // Allocation + initialization
@@ -121,7 +80,7 @@ float* Generator__run(struct Generator* self)
         float* array;  // array holding sample values
 
 	//printf("%s() -\n", __func__);
-        Generator__printProperties(self);
+        Common__printProperties(self);
 
         array = self->gen(self);
 	return array;
