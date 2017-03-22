@@ -46,18 +46,24 @@ data2 = lines2[11:num_lines]
 # find max y value, used to place text
 ypos = 1.5 * float(max(data))
 
-# get input type string
-inputType = lines1[1]
 
 #plot(t, data, marker='o', linestyle='-.', color='b')
 plot(t, data)
 plot(t, data2)
 
-
 fig = gcf()
 fig.canvas.set_window_title('Filter test')
 
-plt.text(0.6*num_lines, ypos, inputType, fontdict=font)
+# get input type string
+inputType = lines1[1]
+alpha = lines1[7]
+riseTime = lines1[8]
+delayTime = lines1[9]
+
+plt.text(0.5*num_lines, ypos, inputType, fontdict=font)
+plt.text(0.5*num_lines, ypos-2, alpha, fontdict=font)
+plt.text(0.5*num_lines, ypos-4, riseTime, fontdict=font)
+plt.text(0.5*num_lines, ypos-6, delayTime, fontdict=font)
 
 xlabel('samples')
 ylabel('i')
