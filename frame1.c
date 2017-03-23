@@ -232,6 +232,8 @@ int main(int argc, char *argv[])
         //Generator__destroy(pCounterGenerator); 
         //Generator__destroy(pSquareGenerator); 
 
+	system("python plot.py 1 &");
+
 	return 0;
 }
 
