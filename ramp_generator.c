@@ -51,7 +51,6 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
 	    //printf("%s(2) - ar[%d]: %.4f, sampleRiseTime: %d, sampleDelayTime: %d\n", __func__, i, ar[i], sampleRiseTime, sampleDelayTime);
 	}
 
-        printf("\n");
         // top level
         for (int i=0; i<sampleDelayTime; i++)
 	{
@@ -65,7 +64,6 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
 	    //printf("%s(3) - ar[%d]: %.4f\n", __func__, i+sampleRiseTime, ar[i+sampleRiseTime]);
 	}
 
-        printf("\n");
         // go back to original level
         for (int i=0; i<self->numberOfSamples-(sampleRiseTime+sampleDelayTime); i++)
 	{
