@@ -74,11 +74,12 @@ void Filter__filter(float *ar, struct Generator *gen, char *s)
 	fclose(fp);
 }
 
+#define SIZE1 512
 void Filter__filter_real_data(float alpha)
 {
         FILE *fpIn;
         FILE *fpOut;
-        float ar[256];  // array holding sample values
+        float ar[SIZE1];  // array holding sample values
         char fileText[10];
 	int idx = 0;
         float new = 0.0;
@@ -95,7 +96,7 @@ void Filter__filter_real_data(float alpha)
 
         printf("\n*** %d numbers of Real indata read ***\n", idx);
 
-        for(int n=0; n<256; n++)
+        for(int n=0; n<SIZE1; n++)
         {
                 new = ar[n];
                 new = last + alpha*(new - last);
