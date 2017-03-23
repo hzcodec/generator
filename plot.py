@@ -13,6 +13,7 @@ font = {'family': 'monospace',
         }
 
 data = []
+skip = 0
 
 try:
     sel = sys.argv[1]
@@ -28,6 +29,12 @@ if (sel == '1'):
     print 'Filtered ramp read\n'
     lines2 = [line.rstrip('\n') for line in open('filtered_ramp.txt')]
 
+if (sel == '2'):
+    print 'Real filtered samples read\n'
+    lines1 = [line.rstrip('\n') for line in open('filtered_realdata.txt')]
+    num_lines = sum(1 for line in open('filtered_realdata.txt'))
+    skip = 1
+
 
 try:
     t = arange(0, num_lines-NUMBER_OF_FIELDS, 1)
@@ -41,7 +48,8 @@ totTime = (num_lines-NUMBER_OF_FIELDS) * SAMPLING_TIME / 1000.0
 
 # just make a copy of the list except the header info
 data = lines1[11:num_lines]
-data2 = lines2[11:num_lines]
+if (skip != 1):
+    data2 = lines2[11:num_lines]
 
 # find max y value, used to place text
 ypos = 1.5 * float(max(data))
@@ -49,7 +57,8 @@ ypos = 1.5 * float(max(data))
 
 #plot(t, data, marker='o', linestyle='-.', color='b')
 plot(t, data)
-plot(t, data2)
+if (skip != 1):
+    plot(t, data2)
 
 fig = gcf()
 fig.canvas.set_window_title('Filter test')

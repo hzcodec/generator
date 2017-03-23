@@ -74,3 +74,38 @@ void Filter__filter(float *ar, struct Generator *gen, char *s)
 	fclose(fp);
 }
 
+void Filter__filter_real_data(float alpha)
+{
+        FILE *fpIn;
+        FILE *fpOut;
+        float ar[256];  // array holding sample values
+        char fileText[10];
+	int idx = 0;
+        float new = 0.0;
+        float last = 0.0;
+
+        fpIn = fopen("realdata.txt", "r");
+        fpOut = fopen("filtered_realdata.txt", "w");
+
+        while(fgets(fileText, 10, fpIn) != NULL)
+        {
+            ar[idx] = atof(fileText);
+            idx++;
+        }
+
+        printf("\n*** %d numbers of Real indata read ***\n", idx);
+
+        for(int n=0; n<256; n++)
+        {
+                new = ar[n];
+                new = last + alpha*(new - last);
+
+                fprintf(fpOut, "%.4f\n", new);
+                last = new;
+        }
+
+	printf("'filtered_realdata.txt created with alpha. %.4f\n", alpha);
+
+	fclose(fpIn);
+	fclose(fpOut);
+}

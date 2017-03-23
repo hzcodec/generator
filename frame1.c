@@ -227,6 +227,8 @@ int main(int argc, char *argv[])
         Filter__filter(sinusArray, pSinusGenerator, "filtered_sinus.txt");
         Filter__filter(squareArray, pSquareGenerator, "filtered_square.txt");
 
+        Filter__filter_real_data(gp.alpha);
+
         Generator__destroy(pRampGenerator); 
         Generator__destroy(pSinusGenerator); 
         Generator__destroy(pCounterGenerator); 
