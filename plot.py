@@ -38,6 +38,7 @@ if (sel == '2'):
     num_lines = sum(1 for line in open('filtered_realdata.txt'))
     fig = gcf()
     fig.canvas.set_window_title('Filter test - real indata')
+    skip=1
 
 
 try:
@@ -69,10 +70,11 @@ alpha = lines1[7]
 riseTime = lines1[8]
 delayTime = lines1[9]
 
-plt.text(0.5*num_lines, ypos, inputType, fontdict=font)
-plt.text(0.5*num_lines, ypos-2, alpha, fontdict=font)
-plt.text(0.5*num_lines, ypos-4, riseTime, fontdict=font)
-plt.text(0.5*num_lines, ypos-6, delayTime, fontdict=font)
+if (skip != 1):
+    plt.text(0.5*num_lines, ypos, inputType, fontdict=font)
+    plt.text(0.5*num_lines, ypos-2, alpha, fontdict=font)
+    plt.text(0.5*num_lines, ypos-4, riseTime, fontdict=font)
+    plt.text(0.5*num_lines, ypos-6, delayTime, fontdict=font)
 
 xlabel('samples')
 ylabel('i')
