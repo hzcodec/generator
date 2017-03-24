@@ -28,11 +28,15 @@ if (sel == '1'):
     num_lines = sum(1 for line in open('ramp_samples.txt'))
     print 'Filtered ramp read\n'
     lines2 = [line.rstrip('\n') for line in open('filtered_ramp.txt')]
+    fig = gcf()
+    fig.canvas.set_window_title('Filter test - simulated indata')
 
 if (sel == '2'):
     print 'Real filtered samples read\n'
     lines1 = [line.rstrip('\n') for line in open('filtered_realdata.txt')]
     num_lines = sum(1 for line in open('filtered_realdata.txt'))
+    fig = gcf()
+    fig.canvas.set_window_title('Filter test - real indata')
     skip = 1
 
 
@@ -60,8 +64,6 @@ plot(t, data)
 if (skip != 1):
     plot(t, data2)
 
-fig = gcf()
-fig.canvas.set_window_title('Filter test')
 
 # get input type string
 inputType = lines1[1]
