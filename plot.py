@@ -34,26 +34,35 @@ if (sel == '1'):
 if (sel == '2'):
     print 'Real filtered samples read\n'
     lines1 = [line.rstrip('\n') for line in open('realdata.txt')]
+    num_lines = sum(1 for line in open('realdata.txt'))
     lines2 = [line.rstrip('\n') for line in open('filtered_realdata.txt')]
-    num_lines = sum(1 for line in open('filtered_realdata.txt'))
     fig = gcf()
     fig.canvas.set_window_title('Filter test - real indata')
     skip=1
 
-
 try:
-    t = arange(0, num_lines-NUMBER_OF_FIELDS, 1)
+    if (skip != 1):
+        t = arange(0, num_lines-NUMBER_OF_FIELDS, 1)
+    else:
+        t = arange(0, num_lines, 1)
+
 except NameError:
     print 'Error! Incorrect choise, only between 1-6'
     sys.exit()
-
 
 # calculate total time and convert to ms
 totTime = (num_lines-NUMBER_OF_FIELDS) * SAMPLING_TIME / 1000.0
 
 # just make a copy of the list except the header info
-data = lines1[11:num_lines]
-data2 = lines2[11:num_lines]
+if (skip != 1):
+    data = lines1[11:num_lines]
+    data2 = lines2[11:num_lines]
+    alpha = lines1[7]
+else:
+    data = lines1[:]
+    data2 = lines2[1:num_lines+1]
+    alpha = lines2[0]
+
 
 # find max y value, used to place text
 ypos = 1.5 * float(max(data))
@@ -63,10 +72,8 @@ ypos = 1.5 * float(max(data))
 plot(t, data)
 plot(t, data2)
 
-
-# get input type string
+## get input type string
 inputType = lines1[1]
-alpha = lines1[7]
 riseTime = lines1[8]
 delayTime = lines1[9]
 
@@ -75,6 +82,9 @@ if (skip != 1):
     plt.text(0.5*num_lines, ypos-2, alpha, fontdict=font)
     plt.text(0.5*num_lines, ypos-4, riseTime, fontdict=font)
     plt.text(0.5*num_lines, ypos-6, delayTime, fontdict=font)
+else:
+    plt.text(0.5*num_lines, ypos-2, alpha, fontdict=font)
+
 
 xlabel('samples')
 ylabel('i')

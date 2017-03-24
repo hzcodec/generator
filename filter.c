@@ -95,6 +95,7 @@ void Filter__filter_real_data(float alpha)
         }
 
         printf("\n*** %d numbers of Real indata read ***\n", idx);
+        fprintf(fpOut, "Alpha: %.4f\n", alpha);
 
         for(int n=0; n<SIZE1; n++)
         {
