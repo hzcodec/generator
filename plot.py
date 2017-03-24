@@ -1,11 +1,11 @@
 #!/usr/bin/env python
+
 import sys
 import matplotlib.pyplot as plt
 from common import *
 
-data = []
-skip = 0
 t = []
+t = range(256)
 
 # read in data file
 def read_indata(fileName):
@@ -16,10 +16,10 @@ def read_indata(fileName):
 
 
 ###################################################################
+print 20*'-'
 data1, numberOfLines1 = read_indata('realdata.txt')
 data2, numberOfLines2 = read_indata('filtered_realdata.txt')
 
-t = range(256)
 
 # make space for the curve
 plt.ylim(float(min(data1))*1.5, float(max(data1))*1.5)
