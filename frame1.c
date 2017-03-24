@@ -235,7 +235,8 @@ int main(int argc, char *argv[])
         Generator__destroy(pSquareGenerator); 
 
 	// start python script using matplotlib
-	system("python plot.py 1 &");
+	system("python plot.py 1&");
+	system("python plot.py 2&");
 
 	return 0;
 }
