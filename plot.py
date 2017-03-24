@@ -83,7 +83,7 @@ if (skip != 1):
     plt.text(0.5*num_lines, ypos-4, riseTime, fontdict=font)
     plt.text(0.5*num_lines, ypos-6, delayTime, fontdict=font)
 else:
-    plt.text(0.5*num_lines, ypos-2, alpha, fontdict=font)
+    plt.text(0.2*num_lines, ypos+4, alpha, fontdict=font)
 
 
 xlabel('samples')
