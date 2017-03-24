@@ -33,11 +33,11 @@ if (sel == '1'):
 
 if (sel == '2'):
     print 'Real filtered samples read\n'
-    lines1 = [line.rstrip('\n') for line in open('filtered_realdata.txt')]
+    lines1 = [line.rstrip('\n') for line in open('realdata.txt')]
+    lines2 = [line.rstrip('\n') for line in open('filtered_realdata.txt')]
     num_lines = sum(1 for line in open('filtered_realdata.txt'))
     fig = gcf()
     fig.canvas.set_window_title('Filter test - real indata')
-    skip = 1
 
 
 try:
@@ -52,8 +52,7 @@ totTime = (num_lines-NUMBER_OF_FIELDS) * SAMPLING_TIME / 1000.0
 
 # just make a copy of the list except the header info
 data = lines1[11:num_lines]
-if (skip != 1):
-    data2 = lines2[11:num_lines]
+data2 = lines2[11:num_lines]
 
 # find max y value, used to place text
 ypos = 1.5 * float(max(data))
@@ -61,8 +60,7 @@ ypos = 1.5 * float(max(data))
 
 #plot(t, data, marker='o', linestyle='-.', color='b')
 plot(t, data)
-if (skip != 1):
-    plot(t, data2)
+plot(t, data2)
 
 
 # get input type string
