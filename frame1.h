@@ -14,6 +14,7 @@
                           _str == RAMP2 ? "RAMP2" : \
                           _str == RAMP3 ? "RAMP3" : \
                           _str == RAMP4 ? "RAMP4" : \
+                          _str == REAL ? "Real data" : \
                           _str == NOT_APPLICABLE ? "NOT_APPLICABLE" : "UNKNOWN"
 
 #define NOISE_OFF_POS 5
@@ -41,9 +42,18 @@ enum generator_properties {
 	RAMP2,
 	RAMP3,
 	RAMP4,
+	REAL,
 	NOT_APPLICABLE,
 };
 
+struct Gen_properties {
+        float amplitude;
+	int   numberOfSamples;
+	int   enableNoise;
+	float alpha;
+	float riseTime;   // [ms]
+	float delayTime;  // [ms]
+};
 
 struct Generator{
    int    type;                      // type of generated signal

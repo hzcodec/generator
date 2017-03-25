@@ -13,6 +13,7 @@
 #include "frame1.h"
 #include "common.h"
 #include "filter.h"
+#include "frame1.h"
 
 
 void Filter__find_max_filter_value(struct TriggerPoint *tp, float val, int n)
@@ -75,7 +76,7 @@ void Filter__filter(float *ar, struct Generator *gen, char *s)
 }
 
 #define SIZE1 512
-void Filter__filter_real_data(struct Gen_properties *gen)
+void Filter__filter_real_data(struct Generator *gen)
 {
         FILE *fpIn;
         FILE *fpOut;
@@ -95,7 +96,9 @@ void Filter__filter_real_data(struct Gen_properties *gen)
         }
 
         printf("\n*** %d numbers of Real indata read ***\n", idx);
-        fprintf(fpOut, "Alpha: %.4f\n", gen->alpha);
+	gen->type = REAL;
+
+        Common__fprintProperties(fpOut, gen);
 
         for(int n=0; n<SIZE1; n++)
         {

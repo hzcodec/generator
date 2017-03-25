@@ -20,15 +20,6 @@
 #include "filter.h"
 #include "common.h"
 
-//struct Gen_properties {
-//        float amplitude;
-//	int   numberOfSamples;
-//	int   enableNoise;
-//	float alpha;
-//	float riseTime;   // [ms]
-//	float delayTime;  // [ms]
-//};
-
 
 void print_usage()
 {
@@ -98,7 +89,7 @@ void Generator__destroy(struct Generator* gen)
         }
 }
 
-void Generator__populate_object(struct Generator *self, struct Gen_properties *gp)
+void Generator__populate_object(struct Generator *self, struct Generator *gp)
 {
 	if (gp->numberOfSamples < (int)(gp->riseTime/SAMPLE_TIME*1000))
 	{
@@ -127,7 +118,8 @@ int main(int argc, char *argv[])
         float* rampArray;         // array holding sample values
         float* sinusArray;        // array holding sample values
 
-	struct Gen_properties gp;
+	//struct Gen_properties gp;
+	struct Generator gp;
 
 	// default values
 	gp.amplitude = 1.0; 
@@ -235,7 +227,7 @@ int main(int argc, char *argv[])
         Generator__destroy(pSquareGenerator); 
 
 	// start python script using matplotlib
-	system("python plot.py 1&");
+//	system("python plot.py 1&");
 	//system("python plot.py 2&");
 
 	return 0;
