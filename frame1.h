@@ -46,14 +46,6 @@ enum generator_properties {
 	NOT_APPLICABLE,
 };
 
-struct Gen_properties {
-        float amplitude;
-	int   numberOfSamples;
-	int   enableNoise;
-	float alpha;
-	float riseTime;   // [ms]
-	float delayTime;  // [ms]
-};
 
 struct Generator{
    int    type;                      // type of generated signal

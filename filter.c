@@ -75,7 +75,7 @@ void Filter__filter(float *ar, struct Generator *gen, char *s)
 	fclose(fp);
 }
 
-#define SIZE1 512
+#define SIZE1 256
 void Filter__filter_real_data(struct Generator *gen)
 {
         FILE *fpIn;
