@@ -72,7 +72,7 @@ void Common__printProperties(struct Generator* gen)
                 printf("Max Noise level: -\n");
 	}
 
-	printf("Alpha: %.4f\n", gen->alpha);
+	printf("alpha: %.4f\n", gen->alpha);
 	printf("Rise time for ramp: %.4f ms\n", gen->riseTime);
 	printf("Delay time for ramp: %.4f ms\n", gen->delayTime);
 
@@ -107,7 +107,7 @@ void Common__fprintProperties(FILE *fp, struct Generator* gen)
                 fprintf(fp, "Max Noise level: -\n");
 	}
 
-	fprintf(fp, "Alpha: %.4f\n", gen->alpha);
+	fprintf(fp, "alpha: %.4f\n", gen->alpha);
 	fprintf(fp, "Rise time for ramp: %.4f ms\n", gen->riseTime);
 	fprintf(fp, "Delay time for ramp: %.4f ms\n", gen->delayTime);
 
