@@ -153,6 +153,17 @@ int main(int argc, char *argv[])
             }
         }
 
+	struct Generator ramp = {RAMP,           // signal type
+	                         2.0,            // amplitude, 
+				 128,            // number of samples 
+				 NOISE_OFF,      // enable noise
+				 0.1,            // min noise level
+				 0.3,            // max noise level
+				 0.01,           // alpha value for filter
+				 1.0,             // rise time
+				 2.0              // delay time
+				};
+
 	// setup default parameters for sinus generator
 	struct Generator sin = {SINUS,            // signal type
 	                        1.0,             // amplitude, 
@@ -176,16 +187,6 @@ int main(int argc, char *argv[])
 				    NOT_APPLICABLE   
 				   };
 
-	struct Generator ramp = {RAMP,           // signal type
-	                         2.0,            // amplitude, 
-				 128,            // number of samples 
-				 NOISE_OFF,      // enable noise
-				 0.1,            // min noise level
-				 0.3,            // max noise level
-				 0.01,           // alpha value for filter
-				 1.0,             // rise time
-				 2.0              // delay time
-				};
 
 	struct Generator square = {SQUARE,         // signal type
 	                           2.0,            // amplitude, 
@@ -227,7 +228,7 @@ int main(int argc, char *argv[])
         Generator__destroy(pSquareGenerator); 
 
 	// start python script using matplotlib
-	system("python plot.py 1&");
+	system("python plot.py &");
 	//system("python plot.py 2&");
 
 	return 0;

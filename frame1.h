@@ -17,7 +17,6 @@
                           _str == REAL ? "Real data" : \
                           _str == NOT_APPLICABLE ? "NOT_APPLICABLE" : "UNKNOWN"
 
-#define NOISE_OFF_POS 5
 
 // define colors
 #define NRM "\x1B[0m"
@@ -29,6 +28,7 @@
 #define CYN "\x1B[36m"
 #define WHT "\x1B[37m"
 #define BOLD "\x1B[1m"
+
 
 enum generator_properties {
 	SINUS = 0,
