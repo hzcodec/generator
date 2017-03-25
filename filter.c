@@ -75,7 +75,7 @@ void Filter__filter(float *ar, struct Generator *gen, char *s)
 }
 
 #define SIZE1 512
-void Filter__filter_real_data(float alpha)
+void Filter__filter_real_data(struct Gen_properties *gen)
 {
         FILE *fpIn;
         FILE *fpOut;
@@ -95,18 +95,18 @@ void Filter__filter_real_data(float alpha)
         }
 
         printf("\n*** %d numbers of Real indata read ***\n", idx);
-        fprintf(fpOut, "Alpha: %.4f\n", alpha);
+        fprintf(fpOut, "Alpha: %.4f\n", gen->alpha);
 
         for(int n=0; n<SIZE1; n++)
         {
                 new = ar[n];
-                new = last + alpha*(new - last);
+                new = last + gen->alpha*(new - last);
 
                 fprintf(fpOut, "%.4f\n", new);
                 last = new;
         }
 
-	printf("'filtered_realdata.txt created with alpha. %.4f\n", alpha);
+	printf("'filtered_realdata.txt created with alpha. %.4f\n", gen->alpha);
 
 	fclose(fpIn);
 	fclose(fpOut);

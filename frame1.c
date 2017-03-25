@@ -20,14 +20,14 @@
 #include "filter.h"
 #include "common.h"
 
-struct Gen_properties {
-        float amplitude;
-	int   numberOfSamples;
-	int   enableNoise;
-	float alpha;
-	float riseTime;   // [ms]
-	float delayTime;  // [ms]
-};
+//struct Gen_properties {
+//        float amplitude;
+//	int   numberOfSamples;
+//	int   enableNoise;
+//	float alpha;
+//	float riseTime;   // [ms]
+//	float delayTime;  // [ms]
+//};
 
 
 void print_usage()
@@ -227,7 +227,7 @@ int main(int argc, char *argv[])
         Filter__filter(sinusArray, pSinusGenerator, "filtered_sinus.txt");
         Filter__filter(squareArray, pSquareGenerator, "filtered_square.txt");
 
-        Filter__filter_real_data(gp.alpha);
+        Filter__filter_real_data(&gp);
 
         Generator__destroy(pRampGenerator); 
         Generator__destroy(pSinusGenerator); 
@@ -236,7 +236,7 @@ int main(int argc, char *argv[])
 
 	// start python script using matplotlib
 	system("python plot.py 1&");
-	system("python plot.py 2&");
+	//system("python plot.py 2&");
 
 	return 0;
 }
