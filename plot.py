@@ -9,7 +9,6 @@ MAX_LEVEL = 40.0      # max level when trigger is reached
 EXPAND_WINDOW = 1.1   # expand matplot window
 X_POS = 0.2           # x-position of alpha print out
 Y_POS = 0.6           # y-position of alpha print out
-NUMBER_OF_SAMPLES = 2048
 SPACE = 11
 
 t = []
@@ -74,8 +73,6 @@ def main():
     # set window title
     plt.gcf().canvas.set_window_title('Filter test')
     plt.title(str(alpha))
-    
-    #plt.text(max(t)*X_POS, max(data1)*Y_POS, str(alpha), font)
     
     sys.argv[1][:-4]
     sys.argv[2][:-4]
