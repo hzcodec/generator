@@ -4,6 +4,7 @@ import sys
 import matplotlib.pyplot as plt
 from common import *
 
+SAMPLE_TIME 83.0      # sample time in us
 MAX_LEVEL = 40.0      # max level when trigger is reached
 EXPAND_WINDOW = 1.1   # expand matplot window
 X_POS = 0.2           # x-position of alpha print out
@@ -16,9 +17,13 @@ t = range(512)
 def read_indata(fileName):
     print fileName + ' read as input data'
     l = [line.rstrip('\n') for line in open(fileName)]
+
+    # convert to float
     result = map(float, l)
 
+    # number of lines
     n = sum(1 for line in open(fileName))
+
     print 'Max input value: ', max(result)
     print 'Min input value: ', min(result)
 
@@ -27,6 +32,8 @@ def read_indata(fileName):
 def read_filtered_indata(fileName):
     print fileName + ' read filtered as input data'
     l = [line.rstrip('\n') for line in open(fileName)]
+
+    # convert to float
     result = map(float, l[11:])
 
     no = 0
@@ -36,14 +43,18 @@ def read_filtered_indata(fileName):
 	    no += 1
             print i, result[i]
 
-    t_time = float(no)*83.0 / 1000.0
+    t_time = float(no)*SAMPLE_TIME / 1000.0  # in [ms]
     print "Trigger time %.2f ms" % t_time
 
     print 'Max output value: ', max(result)
     print 'Min ouput value: ', min(result)
 
+    # number of lines
     n = sum(1 for line in open(fileName))
+
+    # get alpha value
     a = l[7]
+
     return result, n, a
 
 
