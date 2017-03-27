@@ -4,6 +4,17 @@ import sys
 import matplotlib.pyplot as plt
 from common import *
 
+class bcolors:
+    HEADER = '\033[95m'
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
 SAMPLE_TIME = 83.0    # sample time in us
 MAX_LEVEL = 40.0      # max level when trigger is reached
 EXPAND_WINDOW = 1.1   # expand matplot window
@@ -24,8 +35,8 @@ def read_indata(fileName):
     # number of lines
     n = sum(1 for line in open(fileName))
 
-    print '  Max input value: ', max(result)
-    print '  Min input value: ', min(result)
+    print bcolors.GREEN + '  Max input value: ', str(max(result)) + bcolors.ENDC
+    print bcolors.GREEN + '  Min input value: ', str(min(result)) + bcolors.ENDC
 
     return result, n
 
@@ -48,8 +59,8 @@ def read_filtered_indata(fileName):
     t_time = float(no)*SAMPLE_TIME / 1000.0  # in [ms]
     print "  Trigger time %.2f ms" % t_time
 
-    print '  Max output value: ', max(result)
-    print '  Min ouput value: ', min(result)
+    print bcolors.GREEN + '  Max output value: ', str(max(result)) + bcolors.ENDC
+    print bcolors.GREEN + '  Min ouput value: ', str(min(result)) + bcolors.ENDC
 
     # get alpha value
     a = l[7]
