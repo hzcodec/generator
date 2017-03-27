@@ -207,25 +207,25 @@ int main(int argc, char *argv[])
         struct Generator *pRampGenerator = Generator__create(&ramp);
         rampArray = Generator__run(pRampGenerator);
 
-        struct Generator *pSinusGenerator = Generator__create(&sin);
-        sinusArray = Generator__run(pSinusGenerator);
-
-        struct Generator *pCounterGenerator = Generator__create(&counter);
-        Generator__run(pCounterGenerator);
-
-        struct Generator *pSquareGenerator = Generator__create(&square);
-        squareArray = Generator__run(pSquareGenerator);
-
-        Filter__filter(rampArray, pRampGenerator, "filtered_ramp.txt");
-        Filter__filter(sinusArray, pSinusGenerator, "filtered_sinus.txt");
-        Filter__filter(squareArray, pSquareGenerator, "filtered_square.txt");
+//        struct Generator *pSinusGenerator = Generator__create(&sin);
+//        sinusArray = Generator__run(pSinusGenerator);
+//
+//        struct Generator *pCounterGenerator = Generator__create(&counter);
+//        Generator__run(pCounterGenerator);
+//
+//        struct Generator *pSquareGenerator = Generator__create(&square);
+//        squareArray = Generator__run(pSquareGenerator);
+//
+//        Filter__filter(rampArray, pRampGenerator, "filtered_ramp.txt");
+//        Filter__filter(sinusArray, pSinusGenerator, "filtered_sinus.txt");
+//        Filter__filter(squareArray, pSquareGenerator, "filtered_square.txt");
 
         Filter__filter_real_data(&gp);
 
-        Generator__destroy(pRampGenerator); 
-        Generator__destroy(pSinusGenerator); 
-        Generator__destroy(pCounterGenerator); 
-        Generator__destroy(pSquareGenerator); 
+//        Generator__destroy(pRampGenerator); 
+//        Generator__destroy(pSinusGenerator); 
+//        Generator__destroy(pCounterGenerator); 
+//        Generator__destroy(pSquareGenerator); 
 
 	// start python script using matplotlib
 	system("python plot.py &");

@@ -4,22 +4,30 @@ import sys
 import matplotlib.pyplot as plt
 from common import *
 
+EXPAND_WINDOW = 1.1
+X_POS = 0.2
+Y_POS = 0.6
+
 t = []
-t = range(256)
+t = range(512)
 
 # read in data file
 def read_indata(fileName):
     print fileName + ' read as input data'
     l = [line.rstrip('\n') for line in open(fileName)]
+    result = map(float, l)
     n = sum(1 for line in open(fileName))
-    return l, n
+    #print 'Max input value: ', max(l)
+    return result, n
 
 def read_filtered_indata(fileName):
     print fileName + ' read filtered as input data'
     l = [line.rstrip('\n') for line in open(fileName)]
+    result = map(float, l[11:])
+    print 'Max output value: ', max(result)
     n = sum(1 for line in open(fileName))
     a = l[7]
-    return l, n, a
+    return result, n, a
 
 
 ###################################################################
@@ -30,18 +38,18 @@ def main():
     
     
     # make space for the curve
-    plt.ylim(float(min(data1))*1.5, float(max(data1))*1.5)
+    plt.ylim(float(min(data1))*EXPAND_WINDOW, float(max(data1))*EXPAND_WINDOW)
     
     # set window title
     plt.gcf().canvas.set_window_title('Filter test')
     
-    plt.text(max(t)*0.6, max(data1), str(alpha), font)
+    plt.text(max(t)*X_POS, max(data1)*Y_POS, str(alpha), font)
     
     plt.plot(t, data1, color="blue", linewidth=1, label='realdata')
-    plt.plot(t, data2[11:], color="red", linewidth=1, label='filtered_realdata')
+    plt.plot(t, data2, color="red", linewidth=1, label='filtered_realdata')
     
     #legends
-    plt.legend(loc='upper right', frameon=False)
+    plt.legend(loc='upper left', frameon=False)
     
     plt.xlabel('sample number')
     
