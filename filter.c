@@ -75,12 +75,12 @@ void Filter__filter(float *ar, struct Generator *gen, char *s)
 	fclose(fp);
 }
 
-#define SIZE1 512
+#define NUMBER_OF_SAMPLES 2048
 void Filter__filter_real_data(struct Generator *gen)
 {
         FILE *fpIn;
         FILE *fpOut;
-        float ar[SIZE1];  // array holding sample values
+        float ar[NUMBER_OF_SAMPLES];  // array holding sample values
         char fileText[10];
 	int idx = 0;
         float new = 0.0;
@@ -100,7 +100,7 @@ void Filter__filter_real_data(struct Generator *gen)
 
         Common__fprintProperties(fpOut, gen);
 
-        for(int n=0; n<SIZE1; n++)
+        for(int n=0; n<NUMBER_OF_SAMPLES; n++)
         {
                 new = ar[n];
                 new = last + gen->alpha*(new - last);
