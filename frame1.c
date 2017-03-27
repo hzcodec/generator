@@ -23,13 +23,14 @@
 
 void print_usage()
 {
-    printf("Usage: -a [0.0->] -s [64-12288] -n [0|1] -r [0.0 ->] -d [0.0 ->] -f [0.0->]\n");
+    printf("Usage: -a [0.0->] -s [64-12288] -n [0|1] -r [0.0 ->] -d [0.0 ->] -f [0.0->] -g [0.0->]\n");
     printf("       -a : amplitude\n");
     printf("       -s : number of samples\n");
     printf("       -n : enable noise\n");
     printf("       -r : rise time\n");
     printf("       -d : delay time\n");
     printf("       -f : alpha value for filter\n");
+    printf("       -q : set noise level\n");
 }
 
 // Allocation + initialization
@@ -105,6 +106,7 @@ void Generator__populate_object(struct Generator *self, struct Generator *gp)
 	self->alpha = gp->alpha;
 	self->riseTime = gp->riseTime;
 	self->delayTime = gp->delayTime;
+        self->maxNoiseValue = gp->maxNoiseValue;
 }
 
 
@@ -129,7 +131,7 @@ int main(int argc, char *argv[])
 	gp.riseTime = 5.0;
 	gp.delayTime = 1.0;
 
-        while ((option = getopt(argc, argv,"a:s:n:r:d:f:h")) != -1)
+        while ((option = getopt(argc, argv,"a:s:n:r:d:f:q:h")) != -1)
 	{
             switch (option) {
                               case 'a' : gp.amplitude = atof(optarg);
@@ -144,6 +146,8 @@ int main(int argc, char *argv[])
                               case 'd' : gp.delayTime= atof(optarg);
                                          break;
                               case 'f' : gp.alpha= atof(optarg);
+                                         break;
+                              case 'q' : gp.maxNoiseValue = atof(optarg);
                                          break;
                               case 'h' : print_usage();
                                          exit(EXIT_FAILURE);
