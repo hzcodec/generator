@@ -31,7 +31,7 @@ def read_indata(fileName):
     return result, n
 
 def read_filtered_indata(fileName):
-    print fileName + ' read filtered as input data'
+    print fileName + ' read as input filtered data'
     l = [line.rstrip('\n') for line in open(fileName)]
 
     # convert to float
@@ -60,9 +60,10 @@ def read_filtered_indata(fileName):
 
 ###################################################################
 def main():
+
     print 20*'-'
-    data1, numberOfLines1 = read_indata('realdata.txt')
-    data2, numberOfLines2, alpha = read_filtered_indata('filtered_realdata.txt')
+    data1, numberOfLines1 = read_indata(sys.argv[1])
+    data2, numberOfLines2, alpha = read_filtered_indata(sys.argv[2])
     
     
     # make space for the curve
@@ -74,8 +75,10 @@ def main():
     
     #plt.text(max(t)*X_POS, max(data1)*Y_POS, str(alpha), font)
     
-    plt.plot(t, data1, color="blue", linewidth=1, label='realdata')
-    plt.plot(t, data2, color="red", linewidth=1, label='filtered_realdata')
+    sys.argv[1][:-4]
+    sys.argv[2][:-4]
+    plt.plot(t, data1, color="blue", linewidth=1, label=sys.argv[1][:-4])
+    plt.plot(t, data2, color="red", linewidth=1, label=sys.argv[2][:-4])
     
     #legends
     plt.legend(loc='upper left', frameon=False)

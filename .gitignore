@@ -2,3 +2,4 @@ tags
 frame
 *.o
 *.txt
+*.pyc

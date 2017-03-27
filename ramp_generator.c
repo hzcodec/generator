@@ -27,7 +27,7 @@ float* Ramp_generator__generate_ramp(struct Generator* self)
         float *ar = (float *)malloc(sizeof(float) * self->numberOfSamples);    
         fp = fopen("ramp_samples.txt", "w");
 
-        Common__fprintProperties(fp, self);
+        //Common__fprintProperties(fp, self);
 
 	// calculate the slope
         for (int i=0; i<sampleRiseTime; i++)
