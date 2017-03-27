@@ -17,7 +17,8 @@ def read_indata(fileName):
     l = [line.rstrip('\n') for line in open(fileName)]
     result = map(float, l)
     n = sum(1 for line in open(fileName))
-    #print 'Max input value: ', max(l)
+    print 'Max input value: ', max(result)
+    print 'Min input value: ', min(result)
     return result, n
 
 def read_filtered_indata(fileName):
@@ -25,6 +26,7 @@ def read_filtered_indata(fileName):
     l = [line.rstrip('\n') for line in open(fileName)]
     result = map(float, l[11:])
     print 'Max output value: ', max(result)
+    print 'Min ouput value: ', min(result)
     n = sum(1 for line in open(fileName))
     a = l[7]
     return result, n, a
