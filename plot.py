@@ -74,8 +74,10 @@ def main():
     plt.gcf().canvas.set_window_title('Filter test')
     plt.title(str(alpha))
     
+    # get filname without extension
     sys.argv[1][:-4]
     sys.argv[2][:-4]
+
     plt.plot(t, data1, color="blue", linewidth=1, label=sys.argv[1][:-4])
     plt.plot(t, data2, color="red", linewidth=1, label=sys.argv[2][:-4])
     
