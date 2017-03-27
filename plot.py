@@ -41,7 +41,6 @@ def read_filtered_indata(fileName):
     for i in range(0, 512):
         if (result[i] > MAX_LEVEL):
 	    no += 1
-            print i, result[i]
 
     t_time = float(no)*SAMPLE_TIME / 1000.0  # in [ms]
     print "Trigger time %.2f ms" % t_time
