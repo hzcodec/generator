@@ -4,9 +4,10 @@ import sys
 import matplotlib.pyplot as plt
 from common import *
 
-EXPAND_WINDOW = 1.1
-X_POS = 0.2
-Y_POS = 0.6
+MAX_LEVEL = 40.0      # max level when trigger is reached
+EXPAND_WINDOW = 1.1   # expand matplot window
+X_POS = 0.2           # x-position of alpha print out
+Y_POS = 0.6           # y-position of alpha print out
 
 t = []
 t = range(512)
@@ -16,17 +17,31 @@ def read_indata(fileName):
     print fileName + ' read as input data'
     l = [line.rstrip('\n') for line in open(fileName)]
     result = map(float, l)
+
     n = sum(1 for line in open(fileName))
     print 'Max input value: ', max(result)
     print 'Min input value: ', min(result)
+
     return result, n
 
 def read_filtered_indata(fileName):
     print fileName + ' read filtered as input data'
     l = [line.rstrip('\n') for line in open(fileName)]
     result = map(float, l[11:])
+
+    no = 0
+    # check when level is above MAX_LEVEL
+    for i in range(0, 512):
+        if (result[i] > MAX_LEVEl):
+	    no += 1
+            print i, result[i]
+
+    t_time = float(no)*83.0 / 1000.0
+    print "Trigger time %.2f ms" % t_time
+
     print 'Max output value: ', max(result)
     print 'Min ouput value: ', min(result)
+
     n = sum(1 for line in open(fileName))
     a = l[7]
     return result, n, a
