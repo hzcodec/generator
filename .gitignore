@@ -1,5 +1,6 @@
 tags
 frame
-*.o
 *.txt
+!logfiles/*.txt
+*.o
 *.pyc
