@@ -23,8 +23,6 @@ float* Sinus_generator__generate_sinus(struct Generator* self)
 
         fp = fopen("sinus_samples.txt", "w");
 
-        //Common__fprintProperties(fp, self);
-
         float deg = 0.0;
         float value = 0.0;
         float *ar = (float *)malloc(sizeof(float) * self->numberOfSamples);    

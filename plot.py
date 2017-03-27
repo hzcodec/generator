@@ -10,9 +10,9 @@ EXPAND_WINDOW = 1.1   # expand matplot window
 X_POS = 0.2           # x-position of alpha print out
 Y_POS = 0.6           # y-position of alpha print out
 NUMBER_OF_SAMPLES = 2048
+SPACE = 11
 
 t = []
-t = range(NUMBER_OF_SAMPLES)
 
 # read in data file
 def read_indata(fileName):
@@ -31,15 +31,20 @@ def read_indata(fileName):
     return result, n
 
 def read_filtered_indata(fileName):
-    print fileName + ' read as input filtered data'
+    print "\"" + fileName + '" read as input filtered data'
     l = [line.rstrip('\n') for line in open(fileName)]
 
+    # number of lines
+    n = sum(1 for line in open(fileName))
+    print 'nnnnnn', n, fileName
+
+
     # convert to float
-    result = map(float, l[11:])
+    result = map(float, l[SPACE:])
 
     no = 0
     # check when level is above MAX_LEVEL
-    for i in range(0, NUMBER_OF_SAMPLES):
+    for i in range(0, n-SPACE):
         if (result[i] > MAX_LEVEL):
 	    no += 1
 
@@ -48,9 +53,6 @@ def read_filtered_indata(fileName):
 
     print 'Max output value: ', max(result)
     print 'Min ouput value: ', min(result)
-
-    # number of lines
-    n = sum(1 for line in open(fileName))
 
     # get alpha value
     a = l[7]
@@ -66,6 +68,9 @@ def main():
     data2, numberOfLines2, alpha = read_filtered_indata(sys.argv[2])
     
     
+    print '==============================', numberOfLines1
+    t = range(numberOfLines1)
+   
     # make space for the curve
     plt.ylim(float(min(data1))*EXPAND_WINDOW, float(max(data1))*EXPAND_WINDOW)
     
