@@ -229,8 +229,8 @@ int main(int argc, char *argv[])
 
 	// start python script using matplotlib
 	system("python plot.py realdata.txt filtered_realdata.txt &");
-	system("python plot.py ramp_samples.txt filtered_ramp.txt");
-	system("python plot.py sinus_samples.txt filtered_sinus.txt");
+	system("python plot.py ramp_samples.txt filtered_ramp.txt &");
+	system("python plot.py sinus_samples.txt filtered_sinus.txt &");
 
 	return 0;
 }
