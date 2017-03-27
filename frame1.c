@@ -232,9 +232,12 @@ int main(int argc, char *argv[])
         Generator__destroy(pSquareGenerator); 
 
 	// start python script using matplotlib
+	printf("Matplotlib started\n");
 	system("python plot.py realdata.txt filtered_realdata.txt &");
 	system("python plot.py ramp_samples.txt filtered_ramp.txt &");
 	system("python plot.py sinus_samples.txt filtered_sinus.txt &");
+	 
+	printf("---------------------------------------------------------------------------------------\n");
 
 	return 0;
 }

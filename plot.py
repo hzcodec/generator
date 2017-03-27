@@ -15,7 +15,7 @@ t = []
 
 # read in data file
 def read_indata(fileName):
-    print fileName + ' read as input data'
+    print "\"" + fileName + '" read as input data'
     l = [line.rstrip('\n') for line in open(fileName)]
 
     # convert to float
@@ -24,8 +24,8 @@ def read_indata(fileName):
     # number of lines
     n = sum(1 for line in open(fileName))
 
-    print 'Max input value: ', max(result)
-    print 'Min input value: ', min(result)
+    print '  Max input value: ', max(result)
+    print '  Min input value: ', min(result)
 
     return result, n
 
@@ -35,7 +35,6 @@ def read_filtered_indata(fileName):
 
     # number of lines
     n = sum(1 for line in open(fileName))
-    print 'nnnnnn', n, fileName
 
     # convert to float
     result = map(float, l[SPACE:])
@@ -47,10 +46,10 @@ def read_filtered_indata(fileName):
 	    no += 1
 
     t_time = float(no)*SAMPLE_TIME / 1000.0  # in [ms]
-    print "Trigger time %.2f ms" % t_time
+    print "  Trigger time %.2f ms" % t_time
 
-    print 'Max output value: ', max(result)
-    print 'Min ouput value: ', min(result)
+    print '  Max output value: ', max(result)
+    print '  Min ouput value: ', min(result)
 
     # get alpha value
     a = l[7]
@@ -61,7 +60,6 @@ def read_filtered_indata(fileName):
 ###################################################################
 def main():
 
-    print 20*'-'
     data1, numberOfLines1 = read_indata(sys.argv[1])
     data2, numberOfLines2, alpha = read_filtered_indata(sys.argv[2])
     
