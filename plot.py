@@ -38,7 +38,6 @@ def read_filtered_indata(fileName):
     n = sum(1 for line in open(fileName))
     print 'nnnnnn', n, fileName
 
-
     # convert to float
     result = map(float, l[SPACE:])
 
@@ -67,8 +66,6 @@ def main():
     data1, numberOfLines1 = read_indata(sys.argv[1])
     data2, numberOfLines2, alpha = read_filtered_indata(sys.argv[2])
     
-    
-    print '==============================', numberOfLines1
     t = range(numberOfLines1)
    
     # make space for the curve
