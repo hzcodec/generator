@@ -16,7 +16,7 @@ class bcolors:
 
 
 SAMPLE_TIME = 83.0    # sample time in us
-MAX_LEVEL = 20.0      # max level when trigger is reached
+MAX_LEVEL = 30.0      # max level when trigger is reached
 EXPAND_WINDOW = 1.1   # expand matplot window
 X_POS = 0.2           # x-position of alpha print out
 Y_POS = 0.6           # y-position of alpha print out
@@ -55,9 +55,10 @@ def read_filtered_indata(fileName):
     for i in range(0, n-SPACE):
         if (result[i] > MAX_LEVEL):
 	    no += 1
+            t_time = float(no)*SAMPLE_TIME / 1000.0  # in [ms]
 
-    t_time = float(no)*SAMPLE_TIME / 1000.0  # in [ms]
-    print "  Trigger level is exceeded [%.2f A], time %.2f ms" % (MAX_LEVEL, t_time)
+
+    print "  Trigger level is [%.2f A], time %.2f ms" % (MAX_LEVEL, t_time)
 
     print bcolors.GREEN + '  Max output value: ', str(max(result)) + bcolors.ENDC
     print bcolors.GREEN + '  Min ouput value: ', str(min(result)) + bcolors.ENDC

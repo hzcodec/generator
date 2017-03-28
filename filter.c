@@ -94,18 +94,18 @@ void Filter__filter_real_data(int sel, struct Generator *gen)
 			break;
 		case 2:
                 	fpIn = fopen("forceA1001_StuckDeadRope50kg.txt", "r");
+                        fpOut = fopen("filtered_StuckDeadRope50kg.txt", "w");
                         printf("forceA1001_StuckDeadRope50kg.txt opened\n");
 			break;
 		case 3:
                 	fpIn = fopen("forceA1001_StuckDeadRope150kg.txt", "r");
+                        fpOut = fopen("filtered_StuckDeadRope150kg.txt", "w");
                         printf("forceA1001_StuckDeadRope150kg.txt opened\n");
 			break;
 		default:
                 	fpIn = fopen("realdata.txt", "r");
 			break;
 	}
-
-        fpOut = fopen("filtered_realdata.txt", "w");
 
         while(fgets(fileText, 10, fpIn) != NULL)
         {
@@ -127,7 +127,7 @@ void Filter__filter_real_data(int sel, struct Generator *gen)
                 last = new;
         }
 
-	printf("'filtered_realdata.txt created with alpha. %.4f\n", gen->alpha);
+	printf("'Filtered data created with alpha. %.4f\n", gen->alpha);
 
 	fclose(fpIn);
 	fclose(fpOut);
