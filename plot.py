@@ -53,6 +53,7 @@ def read_filtered_indata(fileName):
     result = map(float, l[SPACE:])
 
     no = 0
+    t_time = 0
     # check when level is above MAX_LEVEL
     for i in range(0, n-SPACE):
         if (result[i] > MAX_LEVEL):

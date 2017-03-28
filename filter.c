@@ -127,7 +127,7 @@ void Filter__filter_real_data(int sel, struct Generator *gen)
                 last = new;
         }
 
-	printf("'Filtered data created with alpha. %.4f\n\n", gen->alpha);
+	printf("Filtered data created with alpha. %.4f\n\n", gen->alpha);
 
 	fclose(fpIn);
 	fclose(fpOut);
