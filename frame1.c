@@ -208,34 +208,37 @@ int main(int argc, char *argv[])
         Generator__populate_object(&counter, &gp);
         Generator__populate_object(&square, &gp);
 
-        struct Generator *pRampGenerator = Generator__create(&ramp);
-        rampArray = Generator__run(pRampGenerator);
+        //struct Generator *pRampGenerator = Generator__create(&ramp);
+        //rampArray = Generator__run(pRampGenerator);
 
-        struct Generator *pSinusGenerator = Generator__create(&sin);
-        sinusArray = Generator__run(pSinusGenerator);
+        //struct Generator *pSinusGenerator = Generator__create(&sin);
+        //sinusArray = Generator__run(pSinusGenerator);
 
-        struct Generator *pCounterGenerator = Generator__create(&counter);
-        Generator__run(pCounterGenerator);
+        //struct Generator *pCounterGenerator = Generator__create(&counter);
+        //Generator__run(pCounterGenerator);
 
-        struct Generator *pSquareGenerator = Generator__create(&square);
-        squareArray = Generator__run(pSquareGenerator);
+        //struct Generator *pSquareGenerator = Generator__create(&square);
+        //squareArray = Generator__run(pSquareGenerator);
 
-        Filter__filter(rampArray, pRampGenerator, "filtered_ramp.txt");
-        Filter__filter(sinusArray, pSinusGenerator, "filtered_sinus.txt");
-        Filter__filter(squareArray, pSquareGenerator, "filtered_square.txt");
+        //Filter__filter(rampArray, pRampGenerator, "filtered_ramp.txt");
+        //Filter__filter(sinusArray, pSinusGenerator, "filtered_sinus.txt");
+        //Filter__filter(squareArray, pSquareGenerator, "filtered_square.txt");
 
-        Filter__filter_real_data(&gp);
+        Filter__filter_real_data(2, &gp);
+        Filter__filter_real_data(3, &gp);
 
-        Generator__destroy(pRampGenerator); 
-        Generator__destroy(pSinusGenerator); 
-        Generator__destroy(pCounterGenerator); 
-        Generator__destroy(pSquareGenerator); 
+        //Generator__destroy(pRampGenerator); 
+        //Generator__destroy(pSinusGenerator); 
+        //Generator__destroy(pCounterGenerator); 
+        //Generator__destroy(pSquareGenerator); 
 
 	// start python script using matplotlib
 	printf("Matplotlib started\n");
-	system("python plot.py realdata.txt filtered_realdata.txt &");
-	system("python plot.py ramp_samples.txt filtered_ramp.txt &");
-	system("python plot.py sinus_samples.txt filtered_sinus.txt &");
+	//system("python plot.py realdata.txt filtered_realdata.txt &");
+	system("python plot.py forceA1001_StuckDeadRope50kg.txt filtered_realdata.txt &");
+	system("python plot.py forceA1001_StuckDeadRope150kg.txt filtered_realdata.txt &");
+	//system("python plot.py ramp_samples.txt filtered_ramp.txt &");
+	//system("python plot.py sinus_samples.txt filtered_sinus.txt &");
 	 
 	printf("---------------------------------------------------------------------------------------\n");
 

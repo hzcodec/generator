@@ -75,8 +75,8 @@ void Filter__filter(float *ar, struct Generator *gen, char *s)
 	fclose(fp);
 }
 
-#define NUMBER_OF_SAMPLES 2048
-void Filter__filter_real_data(struct Generator *gen)
+#define NUMBER_OF_SAMPLES 512
+void Filter__filter_real_data(int sel, struct Generator *gen)
 {
         FILE *fpIn;
         FILE *fpOut;
@@ -86,7 +86,25 @@ void Filter__filter_real_data(struct Generator *gen)
         float new = 0.0;
         float last = 0.0;
 
-        fpIn = fopen("realdata.txt", "r");
+	switch (sel)
+	{
+		case 1:
+                	fpIn = fopen("realdata.txt", "r");
+                        printf("realdata.txt opened\n");
+			break;
+		case 2:
+                	fpIn = fopen("forceA1001_StuckDeadRope50kg.txt", "r");
+                        printf("forceA1001_StuckDeadRope50kg.txt opened\n");
+			break;
+		case 3:
+                	fpIn = fopen("forceA1001_StuckDeadRope150kg.txt", "r");
+                        printf("forceA1001_StuckDeadRope150kg.txt opened\n");
+			break;
+		default:
+                	fpIn = fopen("realdata.txt", "r");
+			break;
+	}
+
         fpOut = fopen("filtered_realdata.txt", "w");
 
         while(fgets(fileText, 10, fpIn) != NULL)
