@@ -225,6 +225,7 @@ int main(int argc, char *argv[])
         //Filter__filter(sinusArray, pSinusGenerator, "filtered_sinus.txt");
         //Filter__filter(squareArray, pSquareGenerator, "filtered_square.txt");
 
+	// filter real input data (from Actsafe)
         Filter__filter_real_data(2, &gp);
         Filter__filter_real_data(3, &gp);
 
@@ -242,8 +243,6 @@ int main(int argc, char *argv[])
 	//system("python plot.py ramp_samples.txt filtered_ramp.txt &");
 	//system("python plot.py sinus_samples.txt filtered_sinus.txt &");
 	 
-	//printf("---------------------------------------------------------------------------------------\n");
-
 	return 0;
 }
 

@@ -82,7 +82,7 @@ void Filter__filter_real_data(int sel, struct Generator *gen)
         FILE *fpOut;
         float ar[NUMBER_OF_SAMPLES];  // array holding sample values
         char fileText[10];
-	int idx = 0;
+	int idx = 0;                  // number of samples in in file
         float new = 0.0;
         float last = 0.0;
 
