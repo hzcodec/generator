@@ -61,7 +61,7 @@ def read_filtered_indata(fileName):
             t_time = float(no)*SAMPLE_TIME / 1000.0  # in [ms]
 
 
-    print "  Trigger level is [%.2f A], time %.2f ms" % (MAX_LEVEL, t_time)
+    print "  Trigger level is at %.2f A, time %.2f ms" % (MAX_LEVEL, t_time)
 
     print bcolors.GREEN + '  Max output value: ', str(max(result)) + bcolors.ENDC
     print bcolors.GREEN + '  Min ouput value: ', str(min(result)) + bcolors.ENDC
