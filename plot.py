@@ -54,14 +54,20 @@ def read_filtered_indata(fileName):
 
     no = 0
     t_time = 0
+    flag1 = 0
+    flag2 = 0
     # check when level is above MAX_LEVEL
     for i in range(0, n-SPACE):
-        if (result[i] > MAX_LEVEL):
+	#print 'i - res - no - flag1 - flag2 :  ', i, result[i], no, flag1, flag2
+        if (result[i] > MAX_LEVEL  and flag2 == 0):
+	    flag1 = 1
 	    no += 1
-            t_time = float(no)*SAMPLE_TIME / 1000.0  # in [ms]
+        elif (result[i] < MAX_LEVEL and flag1 == 1):
+	    flag2 = 1
+	    flag1 = 0
 
-
-    print "  Trigger level is at %.2f A, time %.2f ms" % (MAX_LEVEL, t_time)
+    t_time = float(no)*SAMPLE_TIME / 1000.0  # in [ms]
+    print "  Trigger level is at %.2f A, time %.2f ms" % (MAX_LEVEL, t_time*1000)
 
     print bcolors.GREEN + '  Max output value: ', str(max(result)) + bcolors.ENDC
     print bcolors.GREEN + '  Min ouput value: ', str(min(result)) + bcolors.ENDC
