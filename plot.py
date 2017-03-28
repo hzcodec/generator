@@ -58,7 +58,8 @@ def read_filtered_indata(fileName):
     flag2 = 0
     # check when level is above MAX_LEVEL
     for i in range(0, n-SPACE):
-	#print 'i - res - no - flag1 - flag2 :  ', i, result[i], no, flag1, flag2
+	#print 'result[%d]=%.2f, flag1=%d, flag2=%d, no=%d' % (i, result[i], flag1, flag2, no) 
+
         if (result[i] > MAX_LEVEL  and flag2 == 0):
 	    flag1 = 1
 	    no += 1
