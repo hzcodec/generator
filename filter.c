@@ -113,7 +113,7 @@ void Filter__filter_real_data(int sel, struct Generator *gen)
             idx++;
         }
 
-        printf("\n*** %d numbers of Real indata read ***\n", idx);
+        printf("  %d numbers of real indata read\n", idx);
 	gen->type = REAL;
 
         Common__fprintProperties(fpOut, gen);
@@ -127,7 +127,7 @@ void Filter__filter_real_data(int sel, struct Generator *gen)
                 last = new;
         }
 
-	printf("'Filtered data created with alpha. %.4f\n", gen->alpha);
+	printf("'Filtered data created with alpha. %.4f\n\n", gen->alpha);
 
 	fclose(fpIn);
 	fclose(fpOut);

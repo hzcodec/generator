@@ -237,12 +237,12 @@ int main(int argc, char *argv[])
 	printf("Matplotlib started\n");
 	//system("python plot.py realdata.txt filtered_realdata.txt &");
 	system("python plot.py forceA1001_StuckDeadRope50kg.txt filtered_StuckDeadRope50kg.txt &");
-	sleep(2);
+	sleep(1);
 	system("python plot.py forceA1001_StuckDeadRope150kg.txt filtered_StuckDeadRope150kg.txt &");
 	//system("python plot.py ramp_samples.txt filtered_ramp.txt &");
 	//system("python plot.py sinus_samples.txt filtered_sinus.txt &");
 	 
-	printf("---------------------------------------------------------------------------------------\n");
+	//printf("---------------------------------------------------------------------------------------\n");
 
 	return 0;
 }

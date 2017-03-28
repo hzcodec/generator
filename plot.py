@@ -26,6 +26,8 @@ t = []
 
 # read in data file
 def read_indata(fileName):
+    print '\n'
+    print 60*'-' 
     print "\"" + fileName + '" read as input data'
     l = [line.rstrip('\n') for line in open(fileName)]
 
