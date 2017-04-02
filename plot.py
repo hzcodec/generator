@@ -105,7 +105,7 @@ def main():
     #legends
     plt.legend(loc='upper left', frameon=False)
     
-    plt.xlabel('[ms]')
+    plt.xlabel('[s]')
     
     plt.grid(True)
     plt.show()
