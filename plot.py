@@ -99,8 +99,8 @@ def main():
     sys.argv[1][:-4]
     sys.argv[2][:-4]
 
-    plt.plot(res, data1, color="blue", linewidth=1, label=sys.argv[1][:-4])
-    plt.plot(res, data2, color="red", linewidth=1, label=sys.argv[2][:-4])
+    plt.plot(res, data1, color="blue", linewidth=1, label=sys.argv[1][:-4], marker='.', linestyle='--')
+    plt.plot(res, data2, color="red", linewidth=1, label=sys.argv[2][:-4], marker='.', linestyle='--')
     
     #legends
     plt.legend(loc='upper left', frameon=False)
