@@ -226,8 +226,8 @@ int main(int argc, char *argv[])
         //Filter__filter(squareArray, pSquareGenerator, "filtered_square.txt");
 
 	// filter real input data (from Actsafe)
-        Filter__filter_real_data(2, &gp);
-        Filter__filter_real_data(3, &gp);
+        Filter__filter_real_data(1, &gp);
+        //Filter__filter_real_data(3, &gp);
 
         //Generator__destroy(pRampGenerator); 
         //Generator__destroy(pSinusGenerator); 
@@ -236,10 +236,13 @@ int main(int argc, char *argv[])
 
 	// start python script using matplotlib
 	printf("Matplotlib started\n");
+
 	//system("python plot.py realdata.txt filtered_realdata.txt &");
-	system("python plot.py forceA1001_StuckDeadRope50kg.txt filtered_StuckDeadRope50kg.txt &");
+	//system("python plot.py forceA1001_StuckDeadRope50kg.txt filtered_StuckDeadRope50kg.txt &");
+	system("python plot.py realdata.txt filtered_realdata.txt &");
 	sleep(1);
-	system("python plot.py forceA1001_StuckDeadRope150kg.txt filtered_StuckDeadRope150kg.txt &");
+
+	//system("python plot.py forceA1001_StuckDeadRope150kg.txt filtered_StuckDeadRope150kg.txt &");
 	//system("python plot.py ramp_samples.txt filtered_ramp.txt &");
 	//system("python plot.py sinus_samples.txt filtered_sinus.txt &");
 	 

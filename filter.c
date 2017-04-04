@@ -90,6 +90,7 @@ void Filter__filter_real_data(int sel, struct Generator *gen)
 	{
 		case 1:
                 	fpIn = fopen("realdata.txt", "r");
+                        fpOut = fopen("filtered_realdata.txt", "w");
                         printf("realdata.txt opened\n");
 			break;
 		case 2:
@@ -120,11 +121,13 @@ void Filter__filter_real_data(int sel, struct Generator *gen)
 
         for(int n=0; n<NUMBER_OF_SAMPLES; n++)
         {
-                new = ar[n];
-                new = last + gen->alpha*(new - last);
+                //new = ar[n];
+                //new = last + gen->alpha*(new - last);
 
-                fprintf(fpOut, "%.4f\n", new);
-                last = new;
+                //fprintf(fpOut, "%.4f\n", new);
+                //last = new;
+		last += gen->alpha*(ar[n] - last);
+                fprintf(fpOut, "%.4f\n", last);
         }
 
 	printf("Filtered data created with alpha. %.4f\n\n", gen->alpha);
