@@ -135,3 +135,70 @@ void Filter__filter_real_data(int sel, struct Generator *gen)
 	fclose(fpIn);
 	fclose(fpOut);
 }
+
+#define NUMBER_OF_SAMPLES2 256
+#define ALPHA2 0.4
+void Filter__filter_real_data2(struct Generator *gen)
+{
+        FILE *fpIn1;
+        FILE *fpIn2;
+        FILE *fpOut1;
+        FILE *fpOut2;
+
+        float ar1[NUMBER_OF_SAMPLES2];  // array holding sample values
+        float ar2[NUMBER_OF_SAMPLES2];  // array holding sample values
+
+        char fileText1[10];
+        char fileText2[10];
+
+	int idx1 = 0;                  // number of samples in in file
+	int idx2 = 0;                  // number of samples in in file
+        float last = 0.0;
+        float last2 = 0.0;
+
+        fpIn1 = fopen("low_iq_data.txt", "r");
+        fpIn2 = fopen("low_speed_data.txt", "r");
+        fpOut1 = fopen("filtered_low_iq_data.txt", "w");
+        fpOut2 = fopen("filtered_low_speed_data.txt", "w");
+
+        printf("Files opened\n");
+
+        while(fgets(fileText1, 10, fpIn1) != NULL)
+        {
+            ar1[idx1] = atof(fileText1);
+            idx1++;
+        }
+
+        while(fgets(fileText2, 10, fpIn2) != NULL)
+        {
+            ar2[idx2] = atof(fileText2);
+            idx2++;
+        }
+
+        printf("  %d numbers of real indata read\n", idx1);
+	gen->type = REAL;
+
+        Common__fprintProperties(fpOut1, gen);
+        Common__fprintProperties(fpOut2, gen);
+
+        for(int n=0; n<NUMBER_OF_SAMPLES2; n++)
+        {
+		last += gen->alpha*(ar1[n] - last);
+		last2 += ALPHA2*(ar2[n] - last2);
+
+                fprintf(fpOut1, "%.4f\n", last);
+                fprintf(fpOut2, "%.4f\n", last2);
+
+		if (last > 28.0 && last2 < 5.0)
+		{
+		        printf("Tripped at: %d\n", n);
+		}
+        }
+
+	printf("Filtered low_iq_data created with alpha. %.4f\n\n", gen->alpha);
+
+	fclose(fpIn1);
+	fclose(fpIn2);
+	fclose(fpOut1);
+	fclose(fpOut2);
+}

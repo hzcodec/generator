@@ -83,7 +83,9 @@ def read_filtered_indata(fileName):
 def main():
 
     data1, numberOfLines1 = read_indata(sys.argv[1])
-    data2, numberOfLines2, alpha = read_filtered_indata(sys.argv[2])
+    data2, numberOfLines2 = read_indata(sys.argv[2])
+    data3, numberOfLines3, alpha = read_filtered_indata(sys.argv[3])
+    data4, numberOfLines4, alpha = read_filtered_indata(sys.argv[4])
     
     t = range(numberOfLines1)
     res = [x*SAMPLE_TIME/1000.0 for x in t]
@@ -98,9 +100,13 @@ def main():
     # get filname without extension
     sys.argv[1][:-4]
     sys.argv[2][:-4]
+    sys.argv[3][:-4]
+    sys.argv[4][:-4]
 
-    plt.plot(res, data1, color="blue", linewidth=1, label=sys.argv[1][:-4], marker='.', linestyle='-')
-    plt.plot(res, data2, color="red", linewidth=1, label=sys.argv[2][:-4], marker='.', linestyle='-')
+    plt.plot(t, data1, color="black", linewidth=1, label=sys.argv[1][:-4], marker='.', linestyle='-')
+    plt.plot(t, data2, color="red", linewidth=1, label=sys.argv[2][:-4], marker='.', linestyle='-')
+    plt.plot(t, data3, color="green", linewidth=1, label=sys.argv[3][:-4], marker='.', linestyle='-')
+    plt.plot(t, data4, color="blue", linewidth=1, label=sys.argv[4][:-4], marker='.', linestyle='-')
     
     #legends
     plt.legend(loc='upper left', frameon=False)
