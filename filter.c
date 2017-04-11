@@ -138,6 +138,7 @@ void Filter__filter_real_data(int sel, struct Generator *gen)
 
 #define NUMBER_OF_SAMPLES2 256
 #define ALPHA2 0.4
+#define SAMPLE_DELAY 30
 void Filter__filter_real_data2(struct Generator *gen)
 {
         FILE *fpIn1;
@@ -183,13 +184,21 @@ void Filter__filter_real_data2(struct Generator *gen)
 
         for(int n=0; n<NUMBER_OF_SAMPLES2; n++)
         {
-		last += gen->alpha*(ar1[n] - last);
-		last2 += ALPHA2*(ar2[n] - last2);
+		if (n < SAMPLE_DELAY)
+		{
+		        last = 0;
+			last2 = 0;
+		}
+		else
+		{
+		        last += gen->alpha*(ar1[n] - last);
+		        last2 += ALPHA2*(ar2[n] - last2);
+		}
 
                 fprintf(fpOut1, "%.4f\n", last);
                 fprintf(fpOut2, "%.4f\n", last2);
 
-		if (last > 28.0 && last2 < 5.0)
+		if (last > 28.0 && last2 < 3.0)
 		{
 		        printf("Tripped at: %d\n", n);
 		}
